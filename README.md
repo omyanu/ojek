@@ -1,0 +1,2 @@
+# omyanu
+jasa om yanu

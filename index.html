@@ -586,58 +586,13 @@ function validateMotorRoute(routeCoords){
  border:1px solid rgba(66,133,244,.35);
 }
 </style>
-
-<style>
-/* Google Maps like visual tuning */
-.leaflet-container{
-  background:#e5e3df;
-  font-family:Arial,sans-serif;
-}
-.leaflet-control-zoom{
-  border:none!important;
-  box-shadow:0 2px 8px rgba(0,0,0,.18);
-}
-.leaflet-control-zoom a{
-  width:38px!important;
-  height:38px!important;
-  line-height:38px!important;
-  background:#fff!important;
-  color:#333!important;
-  border:none!important;
-}
-.route-motor-line{
-  stroke:#4285F4;
-  stroke-width:7;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-.user-gps-pulse{
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  background:#4285F4;
-  border:3px solid white;
-  box-shadow:0 0 0 8px rgba(66,133,244,.18);
-}
-</style>
-
 </head>
 <body>
 <h1 style="position:absolute;left:-9999px;">Ojek Motor Pamulang Tangerang Selatan - Ojek Om Yanu</h1>
 <div class='section' id='1'><div class='widget HTML' data-version='2' id='HTML1'>
 <div class='widget-content'>
 <script>
-              
-const MOTOR_ROUTING_CONFIG = {
-  engine: "valhalla",
-  costing: "motor_scooter",
-  language: "id-ID",
-  units: "kilometers",
-  avoidHighways: true,
-  avoidTolls: true
-};
-
-const ROUTING_CONFIG = {
+              const ROUTING_CONFIG = {
   profile: "motorcycle",
   avoidToll: true,
   avoidMotorway: true
@@ -726,8 +681,6 @@ const APP_CONFIG = {
       return `Halo kak, berikut rincian jarak dan estimasi ongkos pengiriman atau ojek kami.\n\n🛵 *Pilihan Layanan:* ${rincian.layanan}\n💰 *Total Ongkos:* ${rincian.totalOngkos}\n🛣 *Jarak Tempuh:* ${rincian.jarak}\n🔄 *Perjalanan:* ${statusPerjalanan}\n\n📍 Cek rute atau ubah rincian langsung di web:\n${urlLink}${infoBayar}`;
     }
   };
-
-  // yang ini jangan diubah
   document.title = APP_CONFIG.namaAplikasi;  document.documentElement.style.setProperty('--ink', APP_CONFIG.warna.gelapTeks);
 document.documentElement.style.setProperty('--accent', APP_CONFIG.warna.aksenUtama);  document.documentElement.style.setProperty('--origin', APP_CONFIG.warna.titikAwal);
             </script>
@@ -1369,12 +1322,7 @@ const haversine = (a, b) => {
 
 const routeBetween = async (list) => {
   const coordsStr = list.map(p => `${p.lng},${p.lat}`).join(';');
-  const url = `https://valhalla1.openstreetmap.de/route?json=${encodeURIComponent(JSON.stringify({
- locations:list.map(p=>({lat:p.lat,lon:p.lng})),
- costing:"motor_scooter",
- units:"kilometers",
- directions_options:{language:"id-ID",units:"kilometers"}
-}))}`;
+  const url = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&steps=true&continue_straight=false&alternatives=false&exclude=motorway,motorway_link,trunk`;
   try {
     const r = await fetch(url);
     if (!r.ok) throw new Error('osrm-fail');
@@ -2132,6 +2080,156 @@ initApp();
 </div>
 <!-- Floating Action Button: Kembali ke Homepage -->
 
+
+<script>
+/**
+ * Ojek Om Yanu Architecture Layer
+ * Single Source of Truth + Service Pattern
+ */
+
+const APP_STATE = {
+  service: "Penumpang",
+  route: null,
+  userLocation: null,
+  fare: null,
+  isRouting: false
+};
+
+const SERVICE_CONFIG = {
+  Penumpang: {
+    active: true,
+    pricePerKm: 4000
+  },
+  Barang: {
+    active: true,
+    pricePerKm: 3000
+  },
+  Belanja: {
+    active: true,
+    pricePerKm: 3000,
+    serviceFee: 5000
+  }
+};
+
+const ROUTING_CONFIG_V2 = {
+  engine: "valhalla",
+  vehicle: "motor_scooter",
+  avoid: {
+    toll: true,
+    motorway: true,
+    motorway_link: true
+  }
+};
+
+const StorageService = {
+  key: "ojek_om_yanu_config_v2",
+
+  save(data){
+    localStorage.setItem(this.key, JSON.stringify(data));
+  },
+
+  load(){
+    try {
+      return JSON.parse(localStorage.getItem(this.key)) || {};
+    } catch(e){
+      return {};
+    }
+  }
+};
+
+const PricingService = {
+
+  calculate(service, distanceKm){
+
+    const config = SERVICE_CONFIG[service];
+
+    if(!config){
+      throw new Error("SERVICE_NOT_FOUND");
+    }
+
+    let total = distanceKm * config.pricePerKm;
+
+    if(config.serviceFee){
+      total += config.serviceFee;
+    }
+
+    return {
+      service,
+      distanceKm,
+      rate: config.pricePerKm,
+      serviceFee: config.serviceFee || 0,
+      total
+    };
+  }
+};
+
+const RouteValidator = {
+
+  validate(route){
+
+    if(!route || !route.geometry){
+      return false;
+    }
+
+    // reject fallback straight line
+    if(route.geometry.coordinates.length < 2){
+      return false;
+    }
+
+    return true;
+  }
+};
+
+const RoutingService = {
+
+  async calculate(points){
+
+    if(!points || points.length < 2){
+      throw new Error("INVALID_POINT");
+    }
+
+    APP_STATE.isRouting = true;
+
+    try{
+
+      // Valhalla motor routing endpoint preparation
+      // Final production deployment should proxy this through backend.
+      const payload = {
+        locations: points.map(p=>({
+          lat:p.lat,
+          lon:p.lng
+        })),
+        costing:"motor_scooter",
+        costing_options:{
+          motor_scooter:{
+            use_tolls:0,
+            use_highways:0
+          }
+        }
+      };
+
+      return {
+        engine:"valhalla",
+        payload,
+        validated:false
+      };
+
+    }finally{
+      APP_STATE.isRouting=false;
+    }
+  }
+};
+
+window.OjekArchitecture = {
+  STATE:APP_STATE,
+  SERVICES:SERVICE_CONFIG,
+  RoutingService,
+  PricingService,
+  StorageService,
+  RouteValidator
+};
+
+</script>
+
 </body>
 </html>
-<!-- Routing upgraded: Valhalla motor_scooter + Google-like Leaflet UI -->

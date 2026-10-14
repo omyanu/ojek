@@ -10,6 +10,10 @@
 <meta content='IE=edge' http-equiv='X-UA-Compatible'/>
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
 <meta content='yes' name='mobile-web-app-capable'/>
+<meta name="application-name" content="Ojek Om Yanu">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#17223B">
+<link rel="manifest" href="/manifest.json">
 
 <meta content='' name='theme-color'/>
 <meta content='' name='msapplication-navbutton-color'/>
@@ -31,9 +35,9 @@
 <meta content='summary_large_image' name='twitter:card'/>
 <meta content='Ojek Om Yanu' name='twitter:title'/>
 <meta content='Siap Jemput, Siap Antar' name='twitter:description'/>
-<meta content='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhRHgLZdM2Qj3sHt__4OfhspkD0K0fhKRSQrlGCKUuwwfBDSALbK1qDWVM9Bc6FEzWQtMXyi0kfQyxx1QdQSNBkWir25Gz6j6JVLswdF2v4EAqk32oBDktkIrbvSo_gwUDBwKQFg70dxkh8sgtIRY7v-ihga6Mps9v9ptasJBzL72_pVXsFFwKzvSGUcvoH/s1600/Ojek Om Yanu.jpeg' property='og:image'/>
-<meta content='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhRHgLZdM2Qj3sHt__4OfhspkD0K0fhKRSQrlGCKUuwwfBDSALbK1qDWVM9Bc6FEzWQtMXyi0kfQyxx1QdQSNBkWir25Gz6j6JVLswdF2v4EAqk32oBDktkIrbvSo_gwUDBwKQFg70dxkh8sgtIRY7v-ihga6Mps9v9ptasJBzL72_pVXsFFwKzvSGUcvoH/s1600/Ojek Om Yanu.jpeg' property='og:image:secure_url'/>
-<meta content='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhRHgLZdM2Qj3sHt__4OfhspkD0K0fhKRSQrlGCKUuwwfBDSALbK1qDWVM9Bc6FEzWQtMXyi0kfQyxx1QdQSNBkWir25Gz6j6JVLswdF2v4EAqk32oBDktkIrbvSo_gwUDBwKQFg70dxkh8sgtIRY7v-ihga6Mps9v9ptasJBzL72_pVXsFFwKzvSGUcvoH/s1600/Ojek Om Yanu.jpeg' name='twitter:image'/>
+<meta content='/assets/og-image.jpg' property='og:image'/>
+<meta content='/assets/og-image.jpg' property='og:image:secure_url'/>
+<meta content='/assets/og-image.jpg' name='twitter:image'/>
 <meta content='1200' property='og:image:width'/>
 <meta content='630' property='og:image:height'/>
 <meta content='Ojek Om Yanu' property='og:image:alt'/>
@@ -496,10 +500,6 @@
       font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;color:#fff;
       }
     </style>
-<meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'/>
-<meta name='google-adsense-platform-domain' content='blogspot.com'/>
-
-
 <!-- SEO + GEO Optimization -->
 <meta name="description" content="Ojek Om Yanu melayani layanan ojek motor Penumpang, Barang, dan Belanja di Pamulang Tangerang Selatan. Hitung ongkos perjalanan, cek rute motor tanpa tol, dan pesan layanan dengan mudah.">
 <meta name="keywords" content="ojek Pamulang, ojek Tangerang Selatan, ojek online Pamulang, antar barang Pamulang, jasa belanja Pamulang, ojek motor Tangsel">
@@ -545,6 +545,40 @@
 </script>
 <!-- End SEO + GEO Optimization -->
 
+
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"FAQPage",
+ "mainEntity":[
+  {
+   "@type":"Question",
+   "name":"Berapa tarif Ojek Om Yanu?",
+   "acceptedAnswer":{
+    "@type":"Answer",
+    "text":"Tarif layanan Penumpang mulai Rp4000/km dan Barang mulai Rp3000/km."
+   }
+  },
+  {
+   "@type":"Question",
+   "name":"Area layanan Ojek Om Yanu dimana?",
+   "acceptedAnswer":{
+    "@type":"Answer",
+    "text":"Ojek Om Yanu melayani area Pamulang dan wilayah Tangerang Selatan."
+   }
+  }
+ ]
+}
+</script>
+
+
+<style>
+.gps-accuracy-circle{
+ border-radius:50%;
+ background:rgba(66,133,244,.15);
+ border:1px solid rgba(66,133,244,.35);
+}
+</style>
 </head>
 <body>
 <h1 style="position:absolute;left:-9999px;">Ojek Motor Pamulang Tangerang Selatan - Ojek Om Yanu</h1>
@@ -555,6 +589,13 @@
     // 1. Identitas Web
     namaAplikasi: "Ojek Om Yanu",
     wilayahLayanan: "Pamulang, Tangerang Selatan, Banten",
+    areaOperasional: [
+      "Pamulang",
+      "Ciputat",
+      "Serpong",
+      "Pondok Aren",
+      "Tangerang Selatan"
+    ],
 
     // Tampilkan/sembunyikan tombol Pengaturan.
     // false = disembunyikan, true = ditampilkan.
@@ -578,12 +619,15 @@
       ongkosMinimalRp: 0,
       tarifLayanan: {
         penumpang: 4000,
-        barang: 3000
-      }
+        barang: 3000,
+        belanja: 3000
+      },
+      biayaJasaBelanja: 5000
     },
     layananAktif: {
       penumpang: true,
-      barang: true
+      barang: true,
+      belanja: true
     },
 
     // 5. Jadwal Layanan Mingguan
@@ -1230,6 +1274,13 @@ document.addEventListener('fullscreenchange', () => {
   }
 });
 
+
+/* Motor routing preference:
+   - Menggunakan jaringan jalan nyata
+   - Menghindari motorway/tol
+   - Tidak menggunakan garis lurus fallback
+*/
+
 /* ================= OSRM & NOMINATIM ================= */
 const geocodeSearch = async (q) => {
   const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=0&limit=8&countrycodes=id&q=${encodeURIComponent(q)}`;
@@ -1260,7 +1311,7 @@ const haversine = (a, b) => {
 
 const routeBetween = async (list) => {
   const coordsStr = list.map(p => `${p.lng},${p.lat}`).join(';');
-  const url = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&steps=false&exclude=motorway,motorway_link`;
+  const url = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&steps=true&continue_straight=false&alternatives=false&exclude=motorway,motorway_link`;
   try {
     const r = await fetch(url);
     if (!r.ok) throw new Error('osrm-fail');
@@ -1274,14 +1325,25 @@ const routeBetween = async (list) => {
       estimated: false
     };
   } catch (err) {
-    const segKm = [];
-    for (let i = 0; i < list.length - 1; i++) segKm.push(haversine(list[i], list[i + 1]) * 1.35);
-    return {
-      distanceKm: segKm.reduce((a, b) => a + b, 0),
-      coords: list.map(p => [p.lat, p.lng]),
-      segments: segKm,
-      estimated: true
-    };
+    // Jangan menggambar garis lurus jika router gagal.
+    // Coba fallback ke OSRM server alternatif terlebih dahulu.
+    try {
+      const retryUrl = `https://routing.openstreetmap.de/routed-car/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&steps=true&continue_straight=false`;
+      const retry = await fetch(retryUrl);
+      const retryData = await retry.json();
+
+      if (retryData.routes?.length) {
+        const route = retryData.routes[0];
+        return {
+          distanceKm: route.distance / 1000,
+          coords: route.geometry.coordinates.map(c => [c[1], c[0]]),
+          segments: route.legs.map(leg => leg.distance / 1000),
+          estimated: false
+        };
+      }
+    } catch(e) {}
+
+    throw new Error('route-not-found');
   }
 };
 
@@ -1984,6 +2046,18 @@ const initApp = async () => {
     } else { renderStack(); }
   } else { renderStack(); }
 };
+
+
+// Production config persistence
+const CONFIG_STORAGE_KEY='ojekOmYanuConfig';
+try{
+ const saved=localStorage.getItem(CONFIG_STORAGE_KEY);
+ if(saved){
+   const savedConfig=JSON.parse(saved);
+   if(savedConfig.tarif) Object.assign(APP_CONFIG.tarif,savedConfig.tarif);
+   if(savedConfig.layananAktif) Object.assign(APP_CONFIG.layananAktif,savedConfig.layananAktif);
+ }
+}catch(e){console.warn('Config storage unavailable');}
 
 // audit patch: restore user pinpoint after GPS detection
 initApp();

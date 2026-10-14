@@ -2054,18 +2054,6 @@ window.handleShare = async (btnElement, isCompact = false, evt = null) => {
   try {
     const link = buildRouteShareUrl();
 
-    let payTexts = [];
-    if (payData.dana) payTexts.push(`DANA : ${payData.dana}`);
-    if (payData.ovo) payTexts.push(`OVO : ${payData.ovo}`);
-    if (payData.gopay) payTexts.push(`GOPAY : ${payData.gopay}`);
-    if (payData.shopeepay) payTexts.push(`ShopeePay : ${payData.shopeepay}`);
-    if (payData.bsi) payTexts.push(`BSI : ${payData.bsi}`);
-    if (payData.bri) payTexts.push(`BRI : ${payData.bri}`);
-    if (payData.jago) payTexts.push(`Jago : ${payData.jago}`);
-    if (payData.seabank) payTexts.push(`Seabank : ${payData.seabank}`);
-    if (payData.name) payTexts.push(`a.n ${payData.name}`);
-    const payStr = payTexts.length ? `\n\n💳 *Info Pembayaran:*\n${payTexts.join('\n')}` : '';
-
     const { extraFee } = getServiceConfig(selectedService);
     const rincianPesanan = {
       layanan: selectedService,
@@ -2076,8 +2064,10 @@ window.handleShare = async (btnElement, isCompact = false, evt = null) => {
       biayaJasaFormatted: fmtRp(extraFee)
     };
 
-    const shareText = APP_CONFIG.teksBagikan(link, payStr, rincianPesanan);
+    // Kosongkan infoBayar ('') agar detail rekening tidak disertakan di pesan/caption screenshot
+    const shareText = APP_CONFIG.teksBagikan(link, '', rincianPesanan);
 
+    // Jika tombol "Pesan Sekarang" (bukan tombol screenshot compact bar)
     if (!isCompact) {
       const adminNumber = normalizeWhatsAppNumber(APP_CONFIG.whatsappAdmin);
       if (!adminNumber) {
@@ -2092,7 +2082,12 @@ window.handleShare = async (btnElement, isCompact = false, evt = null) => {
       return;
     }
 
-    document.querySelector('.topbar').style.display = 'none';
+    // Sembunyikan elemen UI & modal pembayaran sebelum mengambil screenshot
+    const topbarEl = document.querySelector('.topbar');
+    topbarEl.style.display = 'none';
+    paymentModal.classList.remove('show');
+    topMenu.classList.remove('show');
+
     const isSheetMinimized = sheetEl.classList.contains('minimized');
     if (isSheetMinimized) sheetEl.style.display = 'none';
 
@@ -2108,7 +2103,7 @@ window.handleShare = async (btnElement, isCompact = false, evt = null) => {
       scale: window.devicePixelRatio || 2
     });
 
-    document.querySelector('.topbar').style.display = 'flex';
+    topbarEl.style.display = 'flex';
     if (isSheetMinimized) sheetEl.style.display = 'flex';
 
     canvas.toBlob(async (blob) => {

@@ -2231,5 +2231,64 @@ window.OjekArchitecture = {
 
 </script>
 
+
+<script>
+/**
+ * Hard Motorcycle Routing Guard
+ * Prevent toll/highway routes from being accepted.
+ */
+
+const MOTOR_ROUTE_POLICY = {
+  vehicle: "motor_scooter",
+  forbiddenRoadTypes: [
+    "motorway",
+    "motorway_link",
+    "toll",
+    "expressway"
+  ],
+  retryLimit: 2
+};
+
+function validateMotorOnlyRoute(route){
+  if(!route) return false;
+
+  const text = JSON.stringify(route).toLowerCase();
+
+  return !MOTOR_ROUTE_POLICY.forbiddenRoadTypes.some(type =>
+    text.includes(type)
+  );
+}
+
+async function requestMotorRoute(points){
+
+  const payload = {
+    locations: points.map(p=>({
+      lat:p.lat,
+      lon:p.lng
+    })),
+    costing:"motor_scooter",
+    costing_options:{
+      motor_scooter:{
+        use_tolls:0,
+        use_highways:0,
+        use_ferry:0,
+        top_speed:45
+      }
+    },
+    directions_options:{
+      units:"kilometers",
+      language:"id-ID"
+    }
+  };
+
+  return payload;
+}
+
+window.MotorRoutingGuard = {
+  validate: validateMotorOnlyRoute,
+  request: requestMotorRoute
+};
+</script>
+
 </body>
 </html>

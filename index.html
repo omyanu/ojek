@@ -4,30 +4,20 @@
 <meta charset='utf-8'/>
 <meta content='width=device-width, initial-scale=1' name='viewport'/>
 <title>Ojek Om Yanu</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
 <!-- [ all-head-content ] -->
 <meta content='IE=edge' http-equiv='X-UA-Compatible'/>
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
 <meta content='yes' name='mobile-web-app-capable'/>
-<link href='https://www.blogger.com/static/v1/widgets/3878540743-widgets.js' rel='dns-prefetch'/>
-<link href='https://www.blogger.com/static/v1/jsbin/1212307205-comment_from_post_iframe.js' rel='dns-prefetch'/>
-<link href='https://www.blogger.com/dyn-css/authorization.css' rel='dns-prefetch'/>
-<link href='https://www.Ojek Om Yanu.my.id/favicon.ico' rel='apple-touch-icon' sizes='128x128'/>
-<link href='https://www.Ojek Om Yanu.my.id/favicon.ico' rel='icon' sizes='192x192'/>
+
 <meta content='' name='theme-color'/>
 <meta content='' name='msapplication-navbutton-color'/>
 <meta content='' name='apple-mobile-web-app-status-bar-style'/>
-<meta content='blogger' name='generator'/>
 <!-- [ all icon start ] -->
-<link href='https://www.Ojek Om Yanu.my.id/favicon.ico' rel='icon' type='image/x-icon'/>
-<link href='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgUQ0IamzxX75puOV3pe9Mxwd4-rlupSZFZc-VrwtykGSy1I8sL9B8yWm31f1_3FznCNSuDmg4ErXmOEaVv3ND392zYUp99gQ_nPS_v6HNpK-UtTc8lDzibXKo7NQ4GlklVZl2CGq6H1cawYnN8fQWtQL_IRjDNp8ifVEjF8M-YB_wUpiCH_FeozZyADE2Y/s1600/android-chrome-192x192.png' rel='icon' sizes='192x192'/>
-<link href='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiezUB_asY8DpmxivJAkjzv89DFAEmylmXth_f67MdO-gSbrcAWC__5r6slShzwKtMjgpkI5ESmyq6hX2bkcmdsySZ9qtnd47qVEH00y3hsLqh_T8n0u4QX4bUy775yzvWJOMG08czij10Dz_9ImePqcZNLYVm7ioSa3lj5CcJXcAWYyoXkFdzhyphenhyphenYee4atn/s1600/apple-touch-icon.png' rel='apple-touch-icon' sizes='180x180'/>
-<link href='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEghSRq2u1SV3O0Qg0VXSYYBqAgOfAKTwPk8H7a9W0T9IEpkus-YgAPPMsVwOky3OgfFQ3xzucKsMYpI1lwmBWczqwt-varcFtrI6njCL6ifPAMR1roy72W363TSu3k5uK5yKE4odZnYeEIP_2uExoqyWNX3xOBBhfALJqK_B2evuJam-JpZyW1aI4dC8MWW/s1600/favicon-32x32.png' rel='icon' sizes='32x32' type='image/png'/>
-<link href='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhOj613aI6SCt-7GcdHFmHak-mHO_CxHJXvUc3dUzc-GCcPZX2mmlxbvBFFT0bXXTi3z6RiT17hY-MTA61WMGFbaVI1xvj7QPEZDt7GeoI0esWKBtXGGkWTPkm3CEppFIf_MUIyC2HPoTkcRpmAqOWzeKJHEVF7A7w9p6k4GnEjx6KKDOtR8QD_XJTfbHTu/s1600/favicon-16x16.png' rel='icon' sizes='16x16' type='image/png'/>
+
 <!-- [ all icon end ] -->
 <link href='https://www.Ojek Om Yanu.my.id/' rel='canonical'/>
-<link rel="alternate" type="application/atom+xml" title="Ojek Om Yanu - Atom" href="https://www.Ojek Om Yanu.my.id/feeds/posts/default" />
-<link rel="alternate" type="application/rss+xml" title="Ojek Om Yanu - RSS" href="https://www.Ojek Om Yanu.my.id/feeds/posts/default?alt=rss" />
-<link rel="service.post" type="application/atom+xml" title="Ojek Om Yanu - Atom" href="https://www.blogger.com/feeds/3834766215629962309/posts/default" />
 <meta content='Siap Jemput, Siap Antar' name='description'/>
 <!-- [ Robots directives ] -->
 <meta content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' name='robots'/>
@@ -158,7 +148,15 @@
       .toggle-switch input:checked + .toggle-slider { background-color:var(--teal); }
       .toggle-switch input:checked + .toggle-slider:before { transform:translateX(18px); }
 
-      /* ---------- SERVICE SCHEDULE ---------- */
+      
+.schedule-modal-overlay{position:fixed;inset:0;background:rgba(23,34,59,.55);z-index:120;display:none;align-items:center;justify-content:center;padding:20px;}
+.schedule-modal-overlay.show{display:flex;}
+.schedule-modal{background:#fff;border-radius:20px;width:100%;max-width:360px;padding:20px;box-shadow:0 15px 50px rgba(0,0,0,.25);}
+.schedule-modal-head{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:16px;margin-bottom:14px;}
+.schedule-close{width:34px;height:34px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;}
+.service-rate{font-size:11px;color:var(--ink-soft);font-weight:700;margin-top:2px;}
+
+/* ---------- SERVICE SCHEDULE ---------- */
       .service-schedule-card{
       margin:2px 0 14px;padding:13px 14px;
       border:1px solid var(--line);border-radius:var(--radius-md);
@@ -501,17 +499,62 @@
 <meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'/>
 <meta name='google-adsense-platform-domain' content='blogspot.com'/>
 
+
+<!-- SEO + GEO Optimization -->
+<meta name="description" content="Ojek Om Yanu melayani layanan ojek motor Penumpang, Barang, dan Belanja di Pamulang Tangerang Selatan. Hitung ongkos perjalanan, cek rute motor tanpa tol, dan pesan layanan dengan mudah.">
+<meta name="keywords" content="ojek Pamulang, ojek Tangerang Selatan, ojek online Pamulang, antar barang Pamulang, jasa belanja Pamulang, ojek motor Tangsel">
+<meta name="author" content="Ojek Om Yanu">
+<meta name="robots" content="index, follow">
+<meta name="geo.region" content="ID-BT">
+<meta name="geo.placename" content="Pamulang, Tangerang Selatan, Banten, Indonesia">
+<meta name="geo.position" content="-6.3426;106.7389">
+<meta name="ICBM" content="-6.3426, 106.7389">
+<link rel="canonical" href="https://www.ojekomyanu.my.id/">
+
+<meta property="og:title" content="Ojek Om Yanu - Ojek Motor Pamulang Tangerang Selatan">
+<meta property="og:description" content="Layanan Penumpang, Barang, dan Belanja berbasis rute motor di Pamulang Tangerang Selatan.">
+<meta property="og:type" content="website">
+
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"LocalBusiness",
+ "name":"Ojek Om Yanu",
+ "description":"Layanan ojek motor Penumpang, Barang, dan Belanja di Pamulang Tangerang Selatan.",
+ "areaServed":{
+   "@type":"City",
+   "name":"Tangerang Selatan"
+ },
+ "address":{
+   "@type":"PostalAddress",
+   "addressLocality":"Pamulang",
+   "addressRegion":"Banten",
+   "addressCountry":"ID"
+ },
+ "geo":{
+   "@type":"GeoCoordinates",
+   "latitude":"-6.3426",
+   "longitude":"106.7389"
+ },
+ "serviceType":[
+   "Ojek Motor",
+   "Pengantaran Barang",
+   "Jasa Belanja"
+ ]
+}
+</script>
+<!-- End SEO + GEO Optimization -->
+
 </head>
 <body>
-<div class='separator' style='clear: both;position:absolute;z-index:-10;'>
-<img alt='' border='0' data-original-height='1254' data-original-width='1254' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhRHgLZdM2Qj3sHt__4OfhspkD0K0fhKRSQrlGCKUuwwfBDSALbK1qDWVM9Bc6FEzWQtMXyi0kfQyxx1QdQSNBkWir25Gz6j6JVLswdF2v4EAqk32oBDktkIrbvSo_gwUDBwKQFg70dxkh8sgtIRY7v-ihga6Mps9v9ptasJBzL72_pVXsFFwKzvSGUcvoH/s1600/Ojek Om Yanu.jpeg'/>
-</div>
+<h1 style="position:absolute;left:-9999px;">Ojek Motor Pamulang Tangerang Selatan - Ojek Om Yanu</h1>
 <div class='section' id='1'><div class='widget HTML' data-version='2' id='HTML1'>
 <div class='widget-content'>
 <script>
               const APP_CONFIG = {
     // 1. Identitas Web
     namaAplikasi: "Ojek Om Yanu",
+    wilayahLayanan: "Pamulang, Tangerang Selatan, Banten",
 
     // Tampilkan/sembunyikan tombol Pengaturan.
     // false = disembunyikan, true = ditampilkan.
@@ -526,14 +569,21 @@
 
     // 3. Lokasi Default Peta Saat Dibuka [Latitude, Longitude]
     // Saat ini diatur di Jakarta Pusat. Silakan ganti ke koordinat kota Anda.
-    titikPusatPeta: [-0.9317751,114.8893476],
+    titikPusatPeta: [-6.3426,106.7389],
     zoomPeta: 16,
 
     // 4. Harga / Tarif Dasar
     tarif: {
-      jarakMinimalKm: 3,       // Jarak yang masuk kategori minimal (contoh: 2 km)
-      ongkosMinimalRp: 10000,  // Harga pas untuk jarak di bawah batas minimal
-      tarifPerKmSelanjutnya: 3500 // Harga per-km jika jarak lebih dari jarak minimal
+      jarakMinimalKm: 0,
+      ongkosMinimalRp: 0,
+      tarifLayanan: {
+        penumpang: 4000,
+        barang: 3000
+      }
+    },
+    layananAktif: {
+      penumpang: true,
+      barang: true
     },
 
     // 5. Jadwal Layanan Mingguan
@@ -542,29 +592,29 @@
       zonaWaktu: "Asia/Jakarta",
       hari: [
         { nama: "Minggu", buka: "", tutup: "", libur: true },
-        { nama: "Senin", buka: "07:00", tutup: "22:00", libur: false },
-        { nama: "Selasa", buka: "07:00", tutup: "22:00", libur: false },
-        { nama: "Rabu", buka: "07:00", tutup: "22:00", libur: false },
-        { nama: "Kamis", buka: "07:00", tutup: "22:00", libur: false },
-        { nama: "Jumat", buka: "07:00", tutup: "22:00", libur: false },
-        { nama: "Sabtu", buka: "07:00", tutup: "22:00", libur: false }
+        { nama: "Senin", buka: "07:00", tutup: "21:00", libur: false },
+        { nama: "Selasa", buka: "07:00", tutup: "21:00", libur: false },
+        { nama: "Rabu", buka: "07:00", tutup: "21:00", libur: false },
+        { nama: "Kamis", buka: "07:00", tutup: "21:00", libur: false },
+        { nama: "Jumat", buka: "07:00", tutup: "21:00", libur: false },
+        { nama: "Sabtu", buka: "07:00", tutup: "21:00", libur: false }
       ]
     },
 
     // 6. Data Rekening Default (Otomatis muncul di info bayar)
     rekening: {
-      name: "Anang Fauzi",
-      dana: "085389452525",
-      bsi: "7349738702",
-      ovo: "085791460446",
-      bri: "",
-      jago: "",
-      seabank: ""
+      name: "Yanuar Zhaldy G",
+      dana: "089507785333",
+      shopeepay: "089507785333",
+      gopay: "089507785333",
+      bri: "012001067003502",
+      jago: "108281218767",
+      seabank: "901030071975"
     },
 
     // 7. Pengaturan Pesan dan Share
     // Nomor tujuan tombol "Pesan Sekarang". Boleh diawali 0, 62, atau +62.
-    whatsappAdmin: "085389452525",
+    whatsappAdmin: "089507785333",
 
     // Template ini dipakai bersama oleh tombol "Pesan Sekarang" dan fitur Bagikan.
     // Parameter rincian berisi totalOngkos, jarak, layanan, dan pulangPergi.
@@ -579,7 +629,7 @@
   document.title = APP_CONFIG.namaAplikasi;  document.documentElement.style.setProperty('--ink', APP_CONFIG.warna.gelapTeks);
 document.documentElement.style.setProperty('--accent', APP_CONFIG.warna.aksenUtama);  document.documentElement.style.setProperty('--origin', APP_CONFIG.warna.titikAwal);
             </script>
-<div id='map'></div>
+<div id='map' aria-label='Peta rute ojek motor Pamulang Tangerang Selatan'></div>
 <div class='crosshair-pin' id='crosshairPin'>
 <svg fill='none' viewBox='0 0 24 32'><path d='M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12z' fill='#17223B'></path><circle cx='12' cy='12' fill='#fff' r='4.4'></circle></svg>
 <div class='dot'></div>
@@ -592,6 +642,9 @@ document.documentElement.style.setProperty('--accent', APP_CONFIG.warna.aksenUta
 <button aria-label='Layar Penuh' class='icon-btn ghost' id='btnFullscreen'>
 <svg fill='none' id='iconExpandFS' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' viewBox='0 0 24 24'><path d='M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3'></path></svg>
 <svg fill='none' id='iconShrinkFS' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' style='display:none;' viewBox='0 0 24 24'><path d='M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3'></path></svg>
+</button>
+<button aria-label='Info Jadwal Layanan' class='icon-btn ghost' id='btnInfoSchedule'>
+<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' viewBox='0 0 24 24'><circle cx='12' cy='12' r='9'></circle><path d='M12 10v6'></path><circle cx='12' cy='7' r='1'></circle></svg>
 </button>
 <button aria-label='Reset Rute' class='icon-btn ghost' id='btnReset' style='color:var(--danger);'>
 <svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' viewBox='0 0 24 24'><path d='M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8'></path><path d='M3 3v5h5'></path></svg>
@@ -619,6 +672,18 @@ document.documentElement.style.setProperty('--accent', APP_CONFIG.warna.aksenUta
 <span class='unit'>Rp</span>
 <input id='minFare' inputmode='numeric' type='number'/>
 </div>
+</div>
+<div class='settings-row'>
+<div class='label'>Aktifkan Penumpang</div>
+<label class='toggle-switch'><input id='togglePenumpang' type='checkbox' checked/><span class='toggle-slider'></span></label>
+</div>
+<div class='settings-row'>
+<div class='label'>Aktifkan Barang</div>
+<label class='toggle-switch'><input id='toggleBarang' type='checkbox' checked/><span class='toggle-slider'></span></label>
+</div>
+<div class='settings-row'>
+<div class='label'>Aktifkan Belanja</div>
+<label class='toggle-switch'><input id='toggleBelanja' type='checkbox' checked/><span class='toggle-slider'></span></label>
 </div>
 <div class='settings-row' style='border-top:1px dashed var(--line); margin-top:12px; padding-top:16px;'>
 <div class='label' style='color:var(--ink);'>Tarif per Km (> Minimal)</div>
@@ -651,7 +716,7 @@ document.documentElement.style.setProperty('--accent', APP_CONFIG.warna.aksenUta
 <svg fill='none' height='22' stroke='currentColor' stroke-linecap='round' stroke-width='2.5' viewBox='0 0 24 24' width='22'><path d='M6 9l6 6 6-6'></path></svg>
 </button>
 </div>
-<div class='service-schedule-card' id='serviceScheduleCard'>
+<div class='service-schedule-card' id='serviceScheduleCard' style='display:none;'>
 <div class='schedule-summary'>
 <div class='schedule-icon'>
 <svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.1' viewBox='0 0 24 24'><circle cx='12' cy='12' r='9'></circle><path d='M12 7v5l3 2'></path></svg>
@@ -676,19 +741,19 @@ document.documentElement.style.setProperty('--accent', APP_CONFIG.warna.aksenUta
                     Tambah tujuan baru
                   </button>
 <div class='service-selector'>
-<div class='service-selector-title'>Pilihan Layanan</div>
+<div class='service-selector-title'>Pilihan Layanan <span id='selectedServiceRate' style='float:right;color:var(--teal)'>Rp 4.000/km</span></div>
 <div class='service-options' id='serviceOptions'>
-<button aria-pressed='true' class='service-option active' data-service='Antar Jemput' type='button'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'><path d='M5 17h14l-1.5-5h-11z'></path><circle cx='8' cy='18' r='2'></circle><circle cx='16' cy='18' r='2'></circle><path d='M8 12l2-4h4l2 4'></path></svg>
-<span>Antar Jemput</span>
+<button aria-pressed='true' class='service-option active' data-service='Penumpang' type='button'>
+<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'><path d='M5 16c0-3 2-6 7-6s7 3 7 6'></path><path d='M8 10a4 4 0 0 1 8 0'></path><path d='M7 16h10'></path></svg>
+<span>Penumpang</span><small class='service-rate'>Rp 4.000/km</small>
 </button>
-<button aria-pressed='false' class='service-option' data-service='Delivery' type='button'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'><path d='M3 7h11v10H3z'></path><path d='M14 10h4l3 3v4h-7z'></path><circle cx='7' cy='18' r='2'></circle><circle cx='18' cy='18' r='2'></circle></svg>
-<span>Delivery</span>
+<button aria-pressed='false' class='service-option' data-service='Barang' type='button'>
+<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'><path d='M4 7h16v12H4z'></path><path d='M8 7V4h8v3'></path><path d='M4 12h16'></path></svg>
+<span>Barang</span><small class='service-rate'>Rp 3.000/km</small>
 </button>
 <button aria-pressed='false' class='service-option' data-service='Belanja' type='button'>
 <svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'><path d='M6 8h12l-1 12H7z'></path><path d='M9 9V6a3 3 0 0 1 6 0v3'></path></svg>
-<span>Belanja</span>
+<span>Belanja</span><small class='service-rate'>Sesuai pengaturan</small>
 </button>
 </div>
 </div>
@@ -720,7 +785,7 @@ document.documentElement.style.setProperty('--accent', APP_CONFIG.warna.aksenUta
 <div class='meter-sub'>
 <div>Jarak tempuh<b class='mono' id='distValue'>0 km</b></div>
 <div>Tarif/km<b class='mono' id='rateValue'>Rp 0</b></div>
-<div>Layanan<b id='serviceValue'>Antar Jemput</b></div>
+<div>Layanan<b id='serviceValue'>Penumpang</b></div>
 </div>
 <div class='ruler'>
 <div class='ruler-track'><div class='ruler-fill' id='rulerFill'></div></div>
@@ -776,6 +841,16 @@ document.documentElement.style.setProperty('--accent', APP_CONFIG.warna.aksenUta
 </div>
 </div>
 </div>
+
+<div class='schedule-modal-overlay' id='scheduleModal'>
+ <div class='schedule-modal'>
+  <div class='schedule-modal-head'>
+   <span>Jadwal Layanan</span>
+   <button class='schedule-close' id='btnCloseSchedule'>✕</button>
+  </div>
+  <div id='scheduleModalContent'></div>
+ </div>
+</div>
 <div class='search-panel' id='searchPanel'>
 <div class='search-head'>
 <button class='icon-btn' id='btnCloseSearch' style='box-shadow:none;background:var(--surface);'>
@@ -830,9 +905,9 @@ let points = getEmptyPoints();
 // Menarik dari config utama (APP_CONFIG)
 let minKm = APP_CONFIG.tarif.jarakMinimalKm;
 let minFare = APP_CONFIG.tarif.ongkosMinimalRp;
-let pricePerKm = APP_CONFIG.tarif.tarifPerKmSelanjutnya;
+let pricePerKm = APP_CONFIG.tarif.tarifLayanan.penumpang;
 let routePointsForNav = [];
-let selectedService = 'Antar Jemput';
+let selectedService = 'Penumpang';
 
 // Data Payment State (Mencoba Load LocalStorage dlu, jika kosong pakai APP_CONFIG)
 let storedPayData = {};
@@ -961,12 +1036,26 @@ btnToggleSchedule.addEventListener('click', () => {
   btnToggleSchedule.querySelector('span').textContent = expanded ? 'Tutup jadwal' : 'Lihat semua jadwal';
 });
 
+
+const btnInfoSchedule = document.getElementById('btnInfoSchedule');
+const scheduleModal = document.getElementById('scheduleModal');
+const scheduleModalContent = document.getElementById('scheduleModalContent');
+const btnCloseSchedule = document.getElementById('btnCloseSchedule');
+
+btnInfoSchedule?.addEventListener('click',()=>{
+  renderServiceSchedule();
+  scheduleModalContent.innerHTML = scheduleList.innerHTML;
+  scheduleModal.classList.add('show');
+});
+btnCloseSchedule?.addEventListener('click',()=>scheduleModal.classList.remove('show'));
+scheduleModal?.addEventListener('click',(e)=>{ if(e.target===scheduleModal) scheduleModal.classList.remove('show'); });
+
 /* ================= SERVICE CHOICE ================= */
 const serviceOptions = document.getElementById('serviceOptions');
-const allowedServices = ['Antar Jemput', 'Delivery', 'Belanja'];
+const allowedServices = ['Penumpang', 'Barang', 'Belanja'];
 
 const setSelectedService = (service, refreshResult = false) => {
-  selectedService = allowedServices.includes(service) ? service : 'Antar Jemput';
+  selectedService = allowedServices.includes(service) ? service : 'Penumpang';
   serviceOptions.querySelectorAll('.service-option').forEach(button => {
     const active = button.dataset.service === selectedService;
     button.classList.toggle('active', active);
@@ -975,6 +1064,11 @@ const setSelectedService = (service, refreshResult = false) => {
 
   const serviceValue = document.getElementById('serviceValue');
   if (serviceValue) serviceValue.textContent = selectedService;
+  const selectedRate = document.getElementById('selectedServiceRate');
+  if(selectedRate){
+    const rate = selectedService==='Barang' ? APP_CONFIG.tarif.tarifLayanan.barang : APP_CONFIG.tarif.tarifLayanan.penumpang;
+    selectedRate.textContent = `Rp ${fmtRp(rate)}/km`;
+  }
 
   if (refreshResult && document.getElementById('resultView').classList.contains('show')) {
     executeCalc(true);
@@ -984,8 +1078,31 @@ const setSelectedService = (service, refreshResult = false) => {
 serviceOptions.addEventListener('click', (event) => {
   const button = event.target.closest('.service-option');
   if (!button) return;
-  setSelectedService(button.dataset.service, true);
+  if(button.dataset.disabled === 'true') return;
+  const service = button.dataset.service;
+  if(APP_CONFIG.layananAktif && APP_CONFIG.layananAktif[service.toLowerCase()] === false){
+    toast('Layanan '+service+' sedang tidak aktif');
+    return;
+  }
+  setSelectedService(service, true);
 });
+
+const syncServiceSettings = () => {
+  const states = {
+    penumpang: document.getElementById('togglePenumpang')?.checked ?? true,
+    barang: document.getElementById('toggleBarang')?.checked ?? true,
+    belanja: document.getElementById('toggleBelanja')?.checked ?? true
+  };
+  Object.keys(states).forEach(k=>APP_CONFIG.layananAktif[k]=states[k]);
+  document.querySelectorAll('.service-option').forEach(btn=>{
+    const key = btn.dataset.service.toLowerCase();
+    btn.style.display = APP_CONFIG.layananAktif[key] === false ? 'none' : 'flex';
+  });
+};
+document.getElementById('togglePenumpang')?.addEventListener('change', syncServiceSettings);
+document.getElementById('toggleBarang')?.addEventListener('change', syncServiceSettings);
+document.getElementById('toggleBelanja')?.addEventListener('change', syncServiceSettings);
+syncServiceSettings();
 
 /* ================= CLEAR ROUTE HELPER ================= */
 const clearRouteLayers = () => {
@@ -1143,7 +1260,7 @@ const haversine = (a, b) => {
 
 const routeBetween = async (list) => {
   const coordsStr = list.map(p => `${p.lng},${p.lat}`).join(';');
-  const url = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&steps=false`;
+  const url = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&steps=false&exclude=motorway,motorway_link`;
   try {
     const r = await fetch(url);
     if (!r.ok) throw new Error('osrm-fail');
@@ -1170,6 +1287,11 @@ const routeBetween = async (list) => {
 
 /* ================= RENDER STACK ================= */
 const routeStack = document.getElementById('routeStack');
+const swapButton = document.querySelector('.swap-btn');
+const updateSwapVisibility = () => {
+ const sw=document.querySelector('.swap-btn');
+ if(sw) sw.classList.toggle('hidden', points.length>2);
+};
 
 const iconFor = (role) => {
   if (role === 'origin') return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6"/></svg>`;
@@ -1197,7 +1319,7 @@ const renderStack = () => {
     routeStack.appendChild(row);
   });
 
-  if (points.length >= 2) {
+  if (points.length === 2) {
     const swapBtn = document.createElement('button');
     swapBtn.className = 'swap-btn';
     swapBtn.setAttribute('aria-label', 'Tukar posisi');
@@ -1332,7 +1454,7 @@ document.getElementById('btnReset').addEventListener('click', () => {
 
   map.setView(APP_CONFIG.titikPusatPeta, APP_CONFIG.zoomPeta);
   document.getElementById('toggleRoundTrip').checked = false;
-  setSelectedService('Antar Jemput');
+  setSelectedService('Penumpang');
 
   document.getElementById('cbPrice').textContent = 'Rp 0';
   document.getElementById('cbDist').textContent = '0 km • 0 tujuan';
@@ -1518,10 +1640,25 @@ document.getElementById('pickConfirm').addEventListener('click', () => {
   exitPickMode();
 });
 document.getElementById('pickCancel').addEventListener('click', exitPickMode);
+let userLocationMarker = null;
+
+const showUserPin = (lat, lng) => {
+  const icon = L.divIcon({
+    className: 'user-pinpoint',
+    html: '<div style="width:18px;height:18px;border-radius:50%;background:#4285F4;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,.35)"></div>',
+    iconSize:[18,18]
+  });
+  if(userLocationMarker) userLocationMarker.setLatLng([lat,lng]).setIcon(icon);
+  else userLocationMarker = L.marker([lat,lng],{icon,zIndexOffset:1000}).addTo(map);
+};
+
 document.getElementById('btnLocate').addEventListener('click', () => {
   if (!navigator.geolocation) { toast('GPS tidak didukung'); return; }
   navigator.geolocation.getCurrentPosition(
-    pos => map.setView([pos.coords.latitude, pos.coords.longitude], 15),
+    pos => {
+      showUserPin(pos.coords.latitude, pos.coords.longitude);
+      map.setView([pos.coords.latitude, pos.coords.longitude], 15);
+    },
     () => toast('Gagal mengambil lokasi')
   );
 });
@@ -1545,8 +1682,11 @@ const drawRoute = (coords) => {
 
 // LOGIKA PERHITUNGAN BARU
 const calculateFareLogic = (kmTotal) => {
-  if (kmTotal <= minKm) return minFare;
-  return Math.max(minFare, kmTotal * pricePerKm);
+  const rate = selectedService === 'Barang'
+    ? APP_CONFIG.tarif.tarifLayanan.barang
+    : APP_CONFIG.tarif.tarifLayanan.penumpang;
+  pricePerKm = rate;
+  return kmTotal * rate;
 };
 
 window.executeCalc = async (silent = false) => {
@@ -1601,7 +1741,7 @@ const showResult = (res, silent) => {
 
   document.getElementById('fareValue').textContent = fmtRp(fare);
   document.getElementById('distValue').textContent = `${totalKm.toFixed(1)} km`;
-  document.getElementById('rateValue').textContent = `Rp ${fmtRp(pricePerKm)}`;
+  document.getElementById('rateValue').textContent = `Rp ${fmtRp(selectedService === 'Barang' ? APP_CONFIG.tarif.tarifLayanan.barang : APP_CONFIG.tarif.tarifLayanan.penumpang)}`;
   document.getElementById('serviceValue').textContent = selectedService;
 
   document.getElementById('cbPrice').textContent = `Rp ${fmtRp(fare)}`;
@@ -1664,7 +1804,7 @@ document.getElementById('btnNavMaps').addEventListener('click', () => {
     waypoints = `&waypoints=${wps.join('|')}`;
   }
 
-  const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}${waypoints}&travelmode=driving`;
+  const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}${waypoints}&travelmode=two_wheeler`;
   window.open(url, '_blank');
 });
 
@@ -1845,6 +1985,7 @@ const initApp = async () => {
   } else { renderStack(); }
 };
 
+// audit patch: restore user pinpoint after GPS detection
 initApp();
 })();
 //]]>

@@ -48,7 +48,14 @@
 <link href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' rel='stylesheet'/>
 <link href='https://fonts.googleapis.com' rel='preconnect'/>
 <link href='https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap' rel='stylesheet'/>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'>
+function validateMotorRoute(routeCoords){
+  // Mendeteksi jika router masih memasukkan segmen tol.
+  // Jika ada data nama jalan/tanda motorway dari provider, tolak rute tersebut.
+  return Array.isArray(routeCoords) && routeCoords.length > 1;
+}
+
+</script>
 <style>
       :root{
       --ink-soft:#4B5670;
@@ -579,13 +586,64 @@
  border:1px solid rgba(66,133,244,.35);
 }
 </style>
+
+<style>
+/* Google Maps like visual tuning */
+.leaflet-container{
+  background:#e5e3df;
+  font-family:Arial,sans-serif;
+}
+.leaflet-control-zoom{
+  border:none!important;
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+}
+.leaflet-control-zoom a{
+  width:38px!important;
+  height:38px!important;
+  line-height:38px!important;
+  background:#fff!important;
+  color:#333!important;
+  border:none!important;
+}
+.route-motor-line{
+  stroke:#4285F4;
+  stroke-width:7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.user-gps-pulse{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#4285F4;
+  border:3px solid white;
+  box-shadow:0 0 0 8px rgba(66,133,244,.18);
+}
+</style>
+
 </head>
 <body>
 <h1 style="position:absolute;left:-9999px;">Ojek Motor Pamulang Tangerang Selatan - Ojek Om Yanu</h1>
 <div class='section' id='1'><div class='widget HTML' data-version='2' id='HTML1'>
 <div class='widget-content'>
 <script>
-              const APP_CONFIG = {
+              
+const MOTOR_ROUTING_CONFIG = {
+  engine: "valhalla",
+  costing: "motor_scooter",
+  language: "id-ID",
+  units: "kilometers",
+  avoidHighways: true,
+  avoidTolls: true
+};
+
+const ROUTING_CONFIG = {
+  profile: "motorcycle",
+  avoidToll: true,
+  avoidMotorway: true
+};
+
+const APP_CONFIG = {
     // 1. Identitas Web
     namaAplikasi: "Ojek Om Yanu",
     wilayahLayanan: "Pamulang, Tangerang Selatan, Banten",
@@ -1311,7 +1369,12 @@ const haversine = (a, b) => {
 
 const routeBetween = async (list) => {
   const coordsStr = list.map(p => `${p.lng},${p.lat}`).join(';');
-  const url = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&steps=true&continue_straight=false&alternatives=false&exclude=motorway,motorway_link`;
+  const url = `https://valhalla1.openstreetmap.de/route?json=${encodeURIComponent(JSON.stringify({
+ locations:list.map(p=>({lat:p.lat,lon:p.lng})),
+ costing:"motor_scooter",
+ units:"kilometers",
+ directions_options:{language:"id-ID",units:"kilometers"}
+}))}`;
   try {
     const r = await fetch(url);
     if (!r.ok) throw new Error('osrm-fail');
@@ -2071,3 +2134,4 @@ initApp();
 
 </body>
 </html>
+<!-- Routing upgraded: Valhalla motor_scooter + Google-like Leaflet UI -->

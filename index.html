@@ -174,14 +174,15 @@
 
   /* ---------- TOP SETTINGS (COLLAPSIBLE) ---------- */
   .top-menu{
-    position:absolute; top:0; left:0; right:0; z-index:25;
-    background:var(--card); box-shadow:var(--shadow-sheet);
-    border-radius:0 0 var(--radius-lg) var(--radius-lg);
-    padding:20px 18px; transform:translateY(-110%);
-    transition:transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
-    max-height: 85vh; overflow-y: auto;
+  position:absolute; top:0; left:0; right:0; z-index:25;
+  background:var(--card); box-shadow:var(--shadow-sheet);
+  border-radius:0 0 var(--radius-lg) var(--radius-lg);
+  padding:20px 18px; transform:translateY(-110%);
+  visibility:hidden; pointer-events:none;
+  transition:transform 0.3s cubic-bezier(0.32, 0.72, 0, 1), visibility 0.3s;
+  max-height: 85vh; overflow-y: auto; 
   }
-  .top-menu.show { transform:translateY(0); }
+  .top-menu.show { transform:translateY(0); visibility:visible; pointer-events:auto; }
   .top-menu-title { font-weight:800; font-size:16px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; }
   .settings-row{
     display:flex;align-items:center;justify-content:space-between;
@@ -2054,6 +2055,18 @@ window.handleShare = async (btnElement, isCompact = false, evt = null) => {
   try {
     const link = buildRouteShareUrl();
 
+    let payTexts = [];
+    if (payData.dana) payTexts.push(`DANA : ${payData.dana}`);
+    if (payData.ovo) payTexts.push(`OVO : ${payData.ovo}`);
+    if (payData.gopay) payTexts.push(`GOPAY : ${payData.gopay}`);
+    if (payData.shopeepay) payTexts.push(`ShopeePay : ${payData.shopeepay}`);
+    if (payData.bsi) payTexts.push(`BSI : ${payData.bsi}`);
+    if (payData.bri) payTexts.push(`BRI : ${payData.bri}`);
+    if (payData.jago) payTexts.push(`Jago : ${payData.jago}`);
+    if (payData.seabank) payTexts.push(`Seabank : ${payData.seabank}`);
+    if (payData.name) payTexts.push(`a.n ${payData.name}`);
+    const payStr = payTexts.length ? `\n\n💳 *Info Pembayaran:*\n${payTexts.join('\n')}` : '';
+
     const { extraFee } = getServiceConfig(selectedService);
     const rincianPesanan = {
       layanan: selectedService,
@@ -2064,10 +2077,8 @@ window.handleShare = async (btnElement, isCompact = false, evt = null) => {
       biayaJasaFormatted: fmtRp(extraFee)
     };
 
-    // Kosongkan infoBayar ('') agar detail rekening tidak disertakan di pesan/caption screenshot
-    const shareText = APP_CONFIG.teksBagikan(link, '', rincianPesanan);
+    const shareText = APP_CONFIG.teksBagikan(link, payStr, rincianPesanan);
 
-    // Jika tombol "Pesan Sekarang" (bukan tombol screenshot compact bar)
     if (!isCompact) {
       const adminNumber = normalizeWhatsAppNumber(APP_CONFIG.whatsappAdmin);
       if (!adminNumber) {
@@ -2082,16 +2093,20 @@ window.handleShare = async (btnElement, isCompact = false, evt = null) => {
       return;
     }
 
-    // Sembunyikan elemen UI & modal pembayaran sebelum mengambil screenshot
-    const topbarEl = document.querySelector('.topbar');
-    topbarEl.style.display = 'none';
-    paymentModal.classList.remove('show');
-    topMenu.classList.remove('show');
-
+// Tombol share pada compact bar tetap membagikan teks dan tangkapan layar.
     const isSheetMinimized = sheetEl.classList.contains('minimized');
-    if (isSheetMinimized) sheetEl.style.display = 'none';
 
-    await new Promise(res => setTimeout(res, 150));
+    // Daftar ID dan Class elemen overlay yang wajib diabaikan saat screenshot
+    const excludedIds = new Set([
+      'topMenu',        // Panel pengaturan & input rekening
+      'paymentModal',   // Modal popup info rekening pembayaran
+      'scheduleModal',  // Modal jadwal layanan
+      'searchPanel',    // Panel pencarian alamat
+      'pickBar',        // Bar pilih titik peta
+      'toast'           // Notifikasi toast
+    ]);
+
+    await new Promise(res => setTimeout(res, 100));
     const w = document.documentElement.clientWidth;
     const h = document.documentElement.clientHeight;
 
@@ -2100,11 +2115,14 @@ window.handleShare = async (btnElement, isCompact = false, evt = null) => {
       allowTaint: false,
       backgroundColor: '#DCE3EA',
       width: w, height: h, windowWidth: w, windowHeight: h,
-      scale: window.devicePixelRatio || 2
+      scale: window.devicePixelRatio || 2,
+      ignoreElements: (el) => {
+        if (excludedIds.has(el.id)) return true;
+        if (el.classList && el.classList.contains('topbar')) return true;
+        if (isSheetMinimized && el.id === 'sheet') return true;
+        return false;
+      }
     });
-
-    topbarEl.style.display = 'flex';
-    if (isSheetMinimized) sheetEl.style.display = 'flex';
 
     canvas.toBlob(async (blob) => {
       if (!blob) throw new Error("Blob failed");

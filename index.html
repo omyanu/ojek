@@ -1,951 +1,952 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-<meta charset='utf-8'/>
-<meta content='width=device-width, initial-scale=1' name='viewport'/>
-<title>Ojek Om Yanu</title>
-<link rel="icon" type="image/png" href="/favicon.png">
-<link rel="apple-touch-icon" href="/favicon.png">
-<!-- [ all-head-content ] -->
-<meta content='IE=edge' http-equiv='X-UA-Compatible'/>
-<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
-<meta content='yes' name='mobile-web-app-capable'/>
-<meta name="application-name" content="Ojek Om Yanu">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#17223B">
-<link rel="manifest" href="/manifest.json">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Ojek Om Yanu - Ojek Motor Pamulang Tangerang Selatan</title>
+<link rel="icon" type="image/png" href="/favicon.png"/>
+<link rel="apple-touch-icon" href="/favicon.png"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta name="application-name" content="Ojek Om Yanu"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#17223B"/>
+<link rel="manifest" href="/manifest.json"/>
 
-<meta content='' name='theme-color'/>
-<meta content='' name='msapplication-navbutton-color'/>
-<meta content='' name='apple-mobile-web-app-status-bar-style'/>
-<!-- [ all icon start ] -->
-
-<!-- [ all icon end ] -->
-<link href='https://www.Ojek Om Yanu.my.id/' rel='canonical'/>
-<meta content='Siap Jemput, Siap Antar' name='description'/>
-<!-- [ Robots directives ] -->
-<meta content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' name='robots'/>
-<!-- [ Open Graph and social metadata ] -->
-<meta content='Ojek Om Yanu' property='og:site_name'/>
-<meta content='id_ID' property='og:locale'/>
-<meta content='website' property='og:type'/>
-<meta content='https://www.Ojek Om Yanu.my.id/' property='og:url'/>
-<meta content='Ojek Om Yanu' property='og:title'/>
-<meta content='Siap Jemput, Siap Antar' property='og:description'/>
-<meta content='summary_large_image' name='twitter:card'/>
-<meta content='Ojek Om Yanu' name='twitter:title'/>
-<meta content='Siap Jemput, Siap Antar' name='twitter:description'/>
-<meta content='/assets/og-image.jpg' property='og:image'/>
-<meta content='/assets/og-image.jpg' property='og:image:secure_url'/>
-<meta content='/assets/og-image.jpg' name='twitter:image'/>
-<meta content='1200' property='og:image:width'/>
-<meta content='630' property='og:image:height'/>
-<meta content='Ojek Om Yanu' property='og:image:alt'/>
-<meta content='Ojek Om Yanu' name='twitter:image:alt'/>
-<style id='page-skin-1' type='text/css'><!--
-
---></style>
-<link href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' rel='stylesheet'/>
-<link href='https://fonts.googleapis.com' rel='preconnect'/>
-<link href='https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap' rel='stylesheet'/>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'>
-function validateMotorRoute(routeCoords){
-  // Mendeteksi jika router masih memasukkan segmen tol.
-  // Jika ada data nama jalan/tanda motorway dari provider, tolak rute tersebut.
-  return Array.isArray(routeCoords) && routeCoords.length > 1;
-}
-
-</script>
-<style>
-      :root{
-      --ink-soft:#4B5670;
-      --line:#E3E7EE;
-      --surface:#F3F5F8;
-      --card:#FFFFFF;
-      --accent-ink:#5A3A0E;
-      --teal:#159E86;
-      --danger:#D3483F;
-      --dest:#D3483F;
-      --wp:#3E6AE1;
-      --radius-lg:20px;
-      --radius-md:14px;
-      --radius-sm:10px;
-      --shadow-sheet:0 -8px 30px rgba(23,34,59,0.14);
-      --shadow-card:0 2px 10px rgba(23,34,59,0.08);
-      --shadow-compact:0 -4px 20px rgba(23,34,59,0.15);
-      }
-      *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-      html,body{height:100dvh;margin:0;overscroll-behavior:none;}
-      body{
-      font-family:'Manrope',system-ui,sans-serif;
-      color:var(--ink);
-      background:var(--surface);
-      position:fixed;inset:0;
-      overflow:hidden;
-      }
-      .mono{font-family:'IBM Plex Mono',monospace;}
-      button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit;}
-      input{font-family:inherit;}
-
-      /* ---------- MAP ---------- */
-      #map{position:absolute;inset:0;z-index:1;background:#DCE3EA;}
-      .leaflet-control-attribution{font-size:9px;opacity:.6;}
-
-      .crosshair-pin{
-      position:absolute;left:50%;top:50%;
-      transform:translate(-50%,-100%);
-      z-index:5;pointer-events:none;
-      display:none;flex-direction:column;align-items:center;
-      filter:drop-shadow(0 3px 4px rgba(23,34,59,.35));
-      }
-      .crosshair-pin.show{display:flex;}
-      .crosshair-pin svg{width:38px;height:38px;}
-      .crosshair-pin .dot{width:6px;height:6px;border-radius:50%;background:rgba(23,34,59,.45);margin-top:-4px;}
-
-      /* ---------- TOP BAR ---------- */
-      .topbar{
-      position:absolute;top:0;left:0;right:0;z-index:20;
-      padding:14px 14px 0;
-      display:flex;justify-content:space-between;align-items:flex-start;
-      pointer-events:none;
-      }
-      .topbar-right { display:flex; gap:10px; }
-      .icon-btn{
-      width:42px;height:42px;border-radius:50%;
-      background:var(--card);box-shadow:var(--shadow-card);
-      display:flex;align-items:center;justify-content:center;
-      pointer-events:auto;color:var(--ink);flex:none;
-      }
-      .icon-btn svg{width:20px;height:20px;}
-      .icon-btn:active{transform:scale(.94);}
-      .icon-btn.ghost{background:rgba(255,255,255,.92);}
-
-      /* ---------- TOP SETTINGS (COLLAPSIBLE) ---------- */
-      .top-menu{
-      position:absolute; top:0; left:0; right:0; z-index:25;
-      background:var(--card); box-shadow:var(--shadow-sheet);
-      border-radius:0 0 var(--radius-lg) var(--radius-lg);
-      padding:20px 18px; transform:translateY(-110%);
-      transition:transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
-      max-height: 85vh; overflow-y: auto; 
-      }
-      .top-menu.show { transform:translateY(0); }
-      .top-menu-title { font-weight:800; font-size:16px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; }
-      .settings-row{
-      display:flex;align-items:center;justify-content:space-between;
-      margin-top:8px;padding:12px 14px;background:var(--surface);border-radius:var(--radius-md);
-      }
-      .settings-row .label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--ink-soft);}
-      .price-edit{display:flex;align-items:center;gap:6px;}
-      .price-edit input{
-      width:70px;text-align:right;border:none;background:transparent;
-      font-size:14px;font-weight:700;color:var(--ink);
-      }
-      .price-edit input:focus{outline:none;}
-      .price-edit .unit{font-size:12px;color:var(--ink-soft);font-weight:600;}
-
-      /* Toggle Switch */
-      .toggle-switch { position:relative; width:42px; height:24px; }
-      .toggle-switch input { opacity:0; width:0; height:0; }
-      .toggle-slider {
-      position:absolute; cursor:pointer; inset:0;
-      background-color:var(--line); border-radius:24px; transition:.3s;
-      }
-      .toggle-slider:before {
-      position:absolute; content:""; height:18px; width:18px;
-      left:3px; bottom:3px; background-color:white;
-      border-radius:50%; transition:.3s;
-      }
-      .toggle-switch input:checked + .toggle-slider { background-color:var(--teal); }
-      .toggle-switch input:checked + .toggle-slider:before { transform:translateX(18px); }
-
-      
-.schedule-modal-overlay{position:fixed;inset:0;background:rgba(23,34,59,.55);z-index:120;display:none;align-items:center;justify-content:center;padding:20px;}
-.schedule-modal-overlay.show{display:flex;}
-.schedule-modal{background:#fff;border-radius:20px;width:100%;max-width:360px;padding:20px;box-shadow:0 15px 50px rgba(0,0,0,.25);}
-.schedule-modal-head{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:16px;margin-bottom:14px;}
-.schedule-close{width:34px;height:34px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;}
-.service-rate{font-size:11px;color:var(--ink-soft);font-weight:700;margin-top:2px;}
-
-/* ---------- SERVICE SCHEDULE ---------- */
-      .service-schedule-card{
-      margin:2px 0 14px;padding:13px 14px;
-      border:1px solid var(--line);border-radius:var(--radius-md);
-      background:linear-gradient(135deg,#FFFFFF 0%,#F7F9FC 100%);
-      box-shadow:0 2px 8px rgba(23,34,59,.05);
-      }
-      .schedule-summary{display:flex;align-items:center;gap:11px;}
-      .schedule-icon{
-      width:38px;height:38px;border-radius:12px;background:#E8F6F2;color:var(--teal);
-      display:flex;align-items:center;justify-content:center;flex:none;
-      }
-      .schedule-icon svg{width:19px;height:19px;}
-      .schedule-main{flex:1;min-width:0;}
-      .schedule-label{font-size:11px;font-weight:800;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.45px;}
-      .schedule-today{font-size:13.5px;font-weight:800;margin-top:2px;line-height:1.35;}
-      .schedule-badge{
-      font-size:10.5px;font-weight:800;padding:6px 9px;border-radius:20px;
-      background:#E8F6F2;color:#117864;white-space:nowrap;
-      }
-      .schedule-badge.closed{background:#FCEBE9;color:var(--danger);}
-      .schedule-toggle{
-      width:100%;display:flex;align-items:center;justify-content:center;gap:5px;
-      padding:8px 0 0;margin-top:9px;border-top:1px dashed var(--line);
-      color:var(--ink-soft);font-size:11.5px;font-weight:800;
-      }
-      .schedule-toggle svg{width:14px;height:14px;transition:transform .2s;}
-      .service-schedule-card.expanded .schedule-toggle svg{transform:rotate(180deg);}
-      .schedule-list{display:none;margin-top:9px;padding-top:3px;}
-      .service-schedule-card.expanded .schedule-list{display:block;}
-      .schedule-day{
-      display:flex;justify-content:space-between;gap:12px;padding:7px 2px;
-      border-bottom:1px solid var(--line);font-size:12px;
-      }
-      .schedule-day:last-child{border-bottom:none;}
-      .schedule-day span:first-child{font-weight:700;color:var(--ink-soft);}
-      .schedule-day b{font-weight:800;text-align:right;}
-      .schedule-day.today span:first-child,.schedule-day.today b{color:var(--teal);}
-      .schedule-day .holiday{color:var(--danger);}
-
-      /* ---------- SERVICE CHOICE ---------- */
-      .service-selector{margin-top:14px;}
-      .service-selector-title{
-      font-size:12px;font-weight:800;color:var(--ink-soft);text-transform:uppercase;
-      letter-spacing:.4px;margin-bottom:8px;
-      }
-      .service-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-      .service-option{
-      min-width:0;padding:11px 6px;border:1.5px solid var(--line);border-radius:var(--radius-sm);
-      background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;
-      gap:6px;color:var(--ink-soft);font-size:11px;font-weight:800;line-height:1.2;
-      }
-      .service-option svg{width:20px;height:20px;}
-      .service-option.active{
-      border-color:var(--teal);background:#EAF8F5;color:#117864;
-      box-shadow:0 2px 8px rgba(21,158,134,.12);
-      }
-      .service-option:active{transform:scale(.97);}
-
-      /* ---------- BOTTOM SHEET ---------- */
-      .sheet{
-      position:absolute;left:0;right:0;bottom:0;z-index:20;
-      background:var(--card);
-      border-radius:22px 22px 0 0;
-      box-shadow:var(--shadow-sheet);
-      max-height:88vh;
-      display:flex;flex-direction:column;
-      transition:transform .28s cubic-bezier(.32,.72,0,1), opacity 0.2s;
-      }
-      .sheet.minimized {
-      transform: translateY(120%);
-      opacity: 0;
-      pointer-events: none;
-      }
-      .sheet-handle{width:100%;padding:10px 0 6px;display:flex;justify-content:center;flex:none;}
-      .sheet-handle span{
-      width:38px;height:4px;border-radius:3px;background:var(--line);
-      position:relative;
-      }
-      .sheet-body{padding:2px 18px 22px;overflow-y:auto;}
-      .sheet-title{font-size:17px;font-weight:800;letter-spacing:-.2px;margin:2px 0 14px;display:flex;align-items:center;justify-content:space-between;}
-      .btn-minimize { color:var(--ink-soft); display:flex; align-items:center; justify-content:center; padding:4px;}
-
-      /* ---------- COMPACT BOTTOM BAR ---------- */
-      .compact-bar{
-      position:absolute; left:0; right:0; bottom:0; z-index:15;
-      background:var(--ink); color:#fff;
-      border-radius:22px 22px 0 0; box-shadow:var(--shadow-compact);
-      padding:16px 20px 24px;
-      display:flex; align-items:center; justify-content:space-between;
-      transform:translateY(120%); transition:transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
-      pointer-events:auto;
-      }
-      .compact-bar.show { transform:translateY(0); }
-      .cb-info { display:flex; flex-direction:column; gap:2px; flex:1; cursor:pointer;}
-      .cb-price { font-size:22px; font-weight:800; letter-spacing:-0.5px; }
-      .cb-dist { font-size:12.5px; font-weight:600; color:rgba(255,255,255,0.7); }
-      .cb-actions { display:flex; gap:10px; align-items:center;}
-      .cb-btn {
-      width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.15);
-      display:flex; align-items:center; justify-content:center; color:#fff;
-      }
-      .cb-btn:active { background:rgba(255,255,255,0.25); }
-
-      /* route stack */
-      .route-stack{position:relative;padding-left:26px;}
-      .route-rail{
-      position:absolute;left:9px;top:14px;bottom:14px;width:2px;
-      background:repeating-linear-gradient(to bottom,var(--line) 0 4px,transparent 4px 8px);
-      }
-      .route-row{
-      position:relative;display:flex;align-items:center;gap:10px;
-      padding:9px 0;
-      }
-      .route-dot{
-      position:absolute;left:-26px;top:50%;transform:translateY(-50%);
-      width:20px;height:20px;border-radius:50%;
-      display:flex;align-items:center;justify-content:center;flex:none;
-      background:var(--card);
-      }
-      .route-dot svg{width:14px;height:14px;}
-      .route-dot.origin{color:var(--origin);}
-      .route-dot.dest{color:var(--dest);}
-      .route-dot.waypoint{color:var(--wp);}
-
-      .route-field{
-      flex:1;min-width:0;
-      background:var(--surface);border-radius:var(--radius-sm);
-      padding:11px 12px;display:flex;align-items:center;gap:8px;
-      min-height:44px;
-      }
-      .route-field.empty .field-text{color:var(--ink-soft);font-weight:600;}
-      .field-text{flex:1;min-width:0;font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-      .field-clear{width:22px;height:22px;flex:none;color:var(--ink-soft);display:flex;align-items:center;justify-content:center;}
-      .field-clear svg{width:14px;height:14px;}
-
-      .swap-btn{
-      position:absolute; right:0; top:43px; width:34px; height:34px;
-      border-radius:50%; background:var(--card); border:1px solid var(--line);
-      display:flex; align-items:center; justify-content:center; color:var(--ink-soft);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06); z-index:10; cursor:pointer;
-      }
-      .swap-btn:active { transform:scale(0.9); }
-
-      .add-stop-btn{
-      display:flex;align-items:center;gap:8px;
-      padding:9px 2px;font-size:13px;font-weight:700;color:var(--wp);
-      }
-      .add-stop-btn svg{width:17px;height:17px;}
-
-      /* CTA */
-      .cta{
-      margin-top:16px;width:100%;padding:15px;border-radius:var(--radius-md);
-      background:var(--ink);color:#fff;font-weight:800;font-size:15px;
-      display:flex;align-items:center;justify-content:center;gap:8px;
-      transition:opacity .15s, transform .1s;
-      }
-      .cta[disabled]{opacity:.35;pointer-events:none;}
-      .cta:active{transform:scale(.98);}
-      .cta svg{width:18px;height:18px;}
-      .cta.loading svg{animation:spin .8s linear infinite;}
-      @keyframes spin{to{transform:rotate(360deg);}}
-
-      .nav-btn {
-      margin-top:14px;width:100%;padding:13px;border-radius:var(--radius-md);
-      background:#4285F4;color:#fff;font-weight:800;font-size:14px;
-      display:flex;align-items:center;justify-content:center;gap:8px;
-      }
-      .nav-btn svg { width:18px;height:18px; }
-
-      /* ---------- RESULT VIEW ---------- */
-      .result{display:none;}
-      .result.show{display:block;}
-      .result-actions-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;}
-      .result-back{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--ink-soft);}
-      .result-back svg{width:16px;height:16px;}
-
-      .meter-card{
-      background:linear-gradient(155deg,var(--ink) 0%, #223052 100%);
-      border-radius:var(--radius-lg);padding:20px 20px 18px;color:#fff;margin-bottom:16px;
-      position:relative;overflow:hidden;
-      }
-      .meter-card::after{
-      content:'';position:absolute;right:-30px;top:-30px;width:130px;height:130px;border-radius:50%;
-      background:radial-gradient(circle,rgba(217,140,43,.35),transparent 70%);
-      }
-      .meter-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.6);}
-      .meter-value{font-size:34px;font-weight:700;margin-top:4px;letter-spacing:-.5px;position:relative;z-index:1;}
-      .meter-value .curr{font-size:18px;vertical-align:2px;color:var(--accent);margin-right:2px;}
-      .meter-sub{display:flex;gap:16px;margin-top:12px;position:relative;z-index:1;}
-      .meter-sub div{font-size:12px;color:rgba(255,255,255,.65);}
-      .meter-sub b{display:block;font-size:15px;color:#fff;font-weight:700;margin-top:1px;}
-
-      .ruler{margin-top:16px;position:relative;z-index:1;}
-      .ruler-track{height:6px;border-radius:4px;background:rgba(255,255,255,.14);overflow:hidden;}
-      .ruler-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--accent));border-radius:4px;transition:width .9s cubic-bezier(.16,1,.3,1);}
-      .ruler-ticks{display:flex;justify-content:space-between;margin-top:5px;}
-      .ruler-ticks span{font-size:9px;color:rgba(255,255,255,.4);font-weight:600;}
-
-      .segment-list{margin-top:2px;}
-      .segment-title{font-size:12px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.4px;margin:14px 0 8px;}
-      .segment{
-      display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);
-      }
-      .segment:last-child{border-bottom:none;}
-      .segment-icon{width:26px;height:26px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;flex:none;color:var(--ink-soft);}
-      .segment-icon svg{width:13px;height:13px;}
-      .segment-text{flex:1;min-width:0;}
-      .segment-route{font-size:12.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-      .segment-dist{font-size:11px;color:var(--ink-soft);margin-top:1px;}
-      .segment-fare{font-size:12.5px;font-weight:700;flex:none;}
-
-      .action-grid { display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;}
-      .btn-full { grid-column: span 2; }
-      .recalc-btn{
-      width:100%;padding:13px;border-radius:var(--radius-md);
-      background:var(--surface);color:var(--ink);font-weight:800;font-size:14px;
-      display:flex;align-items:center;justify-content:center;gap:8px;
-      }
-      .share-btn {
-      width:100%;padding:13px;border-radius:var(--radius-md);
-      background:var(--accent);color:#fff;font-weight:800;font-size:14px;
-      display:flex;align-items:center;justify-content:center;gap:8px;
-      }
-      .share-btn svg, .recalc-btn svg{width:16px;height:16px;}
-
-      /* ---------- MODAL PAYMENT ---------- */
-      .modal-overlay {
-      position: fixed; inset: 0; background: rgba(23,34,59,0.6); z-index: 100;
-      display: none; align-items: center; justify-content: center; padding: 20px;
-      opacity: 0; transition: opacity 0.2s;
-      }
-      .modal-overlay.show { display: flex; opacity: 1; }
-      .modal-card {
-      background: var(--card); border-radius: var(--radius-lg);
-      width: 100%; max-width: 340px; padding: 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2); transform: translateY(20px); transition: transform 0.2s;
-      }
-      .modal-overlay.show .modal-card { transform: translateY(0); }
-      .modal-title { font-size: 16px; font-weight: 800; margin-bottom: 12px; display:flex; justify-content:space-between; align-items:center;}
-
-      .pay-item {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 12px; background: var(--surface); border-radius: var(--radius-sm); margin-bottom: 8px;
-      }
-      .pay-item:last-child { margin-bottom: 0; }
-      .pay-item-info { display: flex; flex-direction: column; }
-      .pay-bank { font-size: 11px; color: var(--ink-soft); font-weight: 700; text-transform: uppercase; margin-bottom: 2px;}
-      .pay-acc { font-size: 15px; font-weight: 800; font-family: 'IBM Plex Mono', monospace; color: var(--ink); }
-      .btn-copy {
-      width: 36px; height: 36px; border-radius: 50%; background: var(--card); color: var(--teal);
-      display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-card);
-      }
-      .btn-copy:active { transform: scale(0.92); }
-
-      /* ---------- SEARCH PANEL ---------- */
-      .search-panel{
-      position:fixed;inset:0;z-index:50;background:var(--card);
-      display:flex;flex-direction:column;
-      transform:translateY(100%);transition:transform .26s cubic-bezier(.32,.72,0,1);
-      }
-      .search-panel.show{transform:translateY(0);}
-      .search-head{
-      display:flex;align-items:center;gap:10px;padding:14px 14px 10px;flex:none;
-      border-bottom:1px solid var(--line);
-      }
-      .search-input-wrap{
-      flex:1;background:var(--surface);border-radius:var(--radius-sm);
-      display:flex;align-items:center;gap:8px;padding:0 12px;height:44px;
-      }
-      .search-input-wrap svg{width:16px;height:16px;color:var(--ink-soft);flex:none;}
-      .search-input-wrap input{
-      flex:1;border:none;background:transparent;font-size:14px;font-weight:600;color:var(--ink);height:100%;
-      }
-      .search-input-wrap input:focus{outline:none;}
-      .search-input-wrap .clear-x{display:none;color:var(--ink-soft);}
-      .search-input-wrap .clear-x svg{width:14px;height:14px;}
-
-      .search-body{flex:1;overflow-y:auto;padding:6px 6px 20px;}
-      .quick-actions{padding:6px 8px 4px;}
-      .quick-action{
-      display:flex;align-items:center;gap:12px;padding:12px 8px;border-radius:var(--radius-sm);
-      }
-      .quick-action:active{background:var(--surface);}
-      .quick-action .qa-icon{
-      width:36px;height:36px;border-radius:50%;background:var(--surface);
-      display:flex;align-items:center;justify-content:center;flex:none;color:var(--teal);
-      }
-      .quick-action .qa-icon svg{width:18px;height:18px;}
-      .quick-action .qa-text b{display:block;font-size:13.5px;font-weight:700;}
-      .quick-action .qa-text span{font-size:11.5px;color:var(--ink-soft);}
-
-      .result-list{padding:4px 8px;}
-      .result-item{
-      display:flex;align-items:flex-start;gap:12px;padding:11px 8px;border-radius:var(--radius-sm);
-      }
-      .result-item:active{background:var(--surface);}
-      .result-item .ri-icon{width:30px;height:30px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;flex:none;color:var(--ink-soft);margin-top:1px;}
-      .result-item .ri-icon svg{width:14px;height:14px;}
-      .result-item .ri-text b{display:block;font-size:13.5px;font-weight:700;line-height:1.35;}
-      .result-item .ri-text span{font-size:11.5px;color:var(--ink-soft);line-height:1.4;display:block;margin-top:1px;}
-      .search-empty{padding:30px 20px;text-align:center;color:var(--ink-soft);font-size:12.5px;}
-
-      /* map-pick mode */
-      .pick-bar{
-      position:fixed;left:0;right:0;bottom:0;z-index:60;
-      background:var(--card);border-radius:22px 22px 0 0;box-shadow:var(--shadow-sheet);
-      padding:16px 18px 22px;display:none;
-      }
-      .pick-bar.show{display:block;}
-      .pick-address{font-size:13.5px;font-weight:700;margin-bottom:2px;line-height:1.4;min-height:19px;}
-      .pick-sub{font-size:11.5px;color:var(--ink-soft);margin-bottom:12px;}
-      .pick-confirm{
-      width:100%;padding:14px;border-radius:var(--radius-md);background:var(--ink);color:#fff;
-      font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;
-      }
-      .pick-confirm svg{width:16px;height:16px;}
-      .pick-cancel{
-      width:100%;padding:10px;margin-top:6px;text-align:center;font-size:12.5px;font-weight:700;color:var(--ink-soft);
-      }
-
-      /* toast */
-      .toast{
-      position:fixed;left:50%;top:16px;transform:translate(-50%,-140%);z-index:80;
-      background:var(--ink);color:#fff;font-size:12.5px;font-weight:700;
-      padding:10px 16px;border-radius:30px;box-shadow:var(--shadow-fab);
-      transition:transform .25s cubic-bezier(.32,.72,0,1);white-space:nowrap;
-      }
-      .toast.show{transform:translate(-50%,0);}
-
-      /* leaflet marker label badges */
-      .pt-badge{
-      width:26px;height:34px;position:relative;
-      }
-      .pt-badge svg{width:100%;height:100%;filter:drop-shadow(0 2px 3px rgba(23,34,59,.35));}
-      .pt-badge .num{
-      position:absolute;top:5px;left:0;right:0;text-align:center;
-      font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;color:#fff;
-      }
-    </style>
 <!-- SEO + GEO Optimization -->
-<meta name="description" content="Ojek Om Yanu melayani layanan ojek motor Penumpang, Barang, dan Belanja di Pamulang Tangerang Selatan. Hitung ongkos perjalanan, cek rute motor tanpa tol, dan pesan layanan dengan mudah.">
-<meta name="keywords" content="ojek Pamulang, ojek Tangerang Selatan, ojek online Pamulang, antar barang Pamulang, jasa belanja Pamulang, ojek motor Tangsel">
-<meta name="author" content="Ojek Om Yanu">
-<meta name="robots" content="index, follow">
-<meta name="geo.region" content="ID-BT">
-<meta name="geo.placename" content="Pamulang, Tangerang Selatan, Banten, Indonesia">
-<meta name="geo.position" content="-6.3426;106.7389">
-<meta name="ICBM" content="-6.3426, 106.7389">
-<link rel="canonical" href="https://www.ojekomyanu.my.id/">
+<link rel="canonical" href="https://www.ojekomyanu.my.id/"/>
+<meta name="description" content="Ojek Om Yanu melayani layanan ojek motor Penumpang, Barang, dan Belanja di Pamulang Tangerang Selatan. Hitung ongkos perjalanan, cek rute motor tanpa tol, dan pesan layanan dengan mudah."/>
+<meta name="keywords" content="ojek Pamulang, ojek Tangerang Selatan, ojek online Pamulang, antar barang Pamulang, jasa belanja Pamulang, ojek motor Tangsel"/>
+<meta name="author" content="Ojek Om Yanu"/>
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
+<meta name="geo.region" content="ID-BT"/>
+<meta name="geo.placename" content="Pamulang, Tangerang Selatan, Banten, Indonesia"/>
+<meta name="geo.position" content="-6.3426;106.7389"/>
+<meta name="ICBM" content="-6.3426, 106.7389"/>
 
-<meta property="og:title" content="Ojek Om Yanu - Ojek Motor Pamulang Tangerang Selatan">
-<meta property="og:description" content="Layanan Penumpang, Barang, dan Belanja berbasis rute motor di Pamulang Tangerang Selatan.">
-<meta property="og:type" content="website">
-
-<script type="application/ld+json">
-{
- "@context":"https://schema.org",
- "@type":"LocalBusiness",
- "name":"Ojek Om Yanu",
- "description":"Layanan ojek motor Penumpang, Barang, dan Belanja di Pamulang Tangerang Selatan.",
- "areaServed":{
-   "@type":"City",
-   "name":"Tangerang Selatan"
- },
- "address":{
-   "@type":"PostalAddress",
-   "addressLocality":"Pamulang",
-   "addressRegion":"Banten",
-   "addressCountry":"ID"
- },
- "geo":{
-   "@type":"GeoCoordinates",
-   "latitude":"-6.3426",
-   "longitude":"106.7389"
- },
- "serviceType":[
-   "Ojek Motor",
-   "Pengantaran Barang",
-   "Jasa Belanja"
- ]
-}
-</script>
-<!-- End SEO + GEO Optimization -->
-
+<!-- Open Graph and Social Metadata -->
+<meta property="og:site_name" content="Ojek Om Yanu"/>
+<meta property="og:locale" content="id_ID"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.ojekomyanu.my.id/"/>
+<meta property="og:title" content="Ojek Om Yanu - Ojek Motor Pamulang Tangerang Selatan"/>
+<meta property="og:description" content="Layanan Penumpang, Barang, dan Belanja berbasis rute motor tanpa tol di Pamulang Tangerang Selatan."/>
+<meta property="og:image" content="/assets/og-image.jpg"/>
+<meta property="og:image:secure_url" content="/assets/og-image.jpg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Ojek Om Yanu"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Ojek Om Yanu - Ojek Motor Pamulang Tangerang Selatan"/>
+<meta name="twitter:description" content="Siap Jemput, Siap Antar. Hitung ongkos rute motor di Pamulang & Tangerang Selatan."/>
+<meta name="twitter:image" content="/assets/og-image.jpg"/>
+<meta name="twitter:image:alt" content="Ojek Om Yanu"/>
 
 <script type="application/ld+json">
 {
- "@context":"https://schema.org",
- "@type":"FAQPage",
- "mainEntity":[
-  {
-   "@type":"Question",
-   "name":"Berapa tarif Ojek Om Yanu?",
-   "acceptedAnswer":{
-    "@type":"Answer",
-    "text":"Tarif layanan Penumpang mulai Rp4000/km dan Barang mulai Rp3000/km."
-   }
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Ojek Om Yanu",
+  "description": "Layanan ojek motor Penumpang, Barang, dan Belanja di Pamulang Tangerang Selatan.",
+  "url": "https://www.ojekomyanu.my.id/",
+  "areaServed": {
+    "@type": "City",
+    "name": "Tangerang Selatan"
   },
-  {
-   "@type":"Question",
-   "name":"Area layanan Ojek Om Yanu dimana?",
-   "acceptedAnswer":{
-    "@type":"Answer",
-    "text":"Ojek Om Yanu melayani area Pamulang dan wilayah Tangerang Selatan."
-   }
-  }
- ]
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Pamulang",
+    "addressRegion": "Banten",
+    "addressCountry": "ID"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "-6.3426",
+    "longitude": "106.7389"
+  },
+  "serviceType": [
+    "Ojek Motor",
+    "Pengantaran Barang",
+    "Jasa Belanja"
+  ]
 }
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Berapa tarif Ojek Om Yanu?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tarif layanan Penumpang Rp4.000/km, Barang Rp3.000/km, dan Belanja Rp3.000/km (+ biaya jasa belanja Rp5.000)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Area layanan Ojek Om Yanu dimana?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ojek Om Yanu melayani area Pamulang dan wilayah Tangerang Selatan."
+      }
+    }
+  ]
+}
+</script>
+
+<style id="page-skin-1" type="text/css"><!--
+--></style>
+<link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
-.gps-accuracy-circle{
- border-radius:50%;
- background:rgba(66,133,244,.15);
- border:1px solid rgba(66,133,244,.35);
-}
+  :root{
+    --ink:#17223B;
+    --ink-soft:#4B5670;
+    --line:#E3E7EE;
+    --surface:#F3F5F8;
+    --card:#FFFFFF;
+    --accent:#D98C2B;
+    --accent-ink:#5A3A0E;
+    --teal:#159E86;
+    --origin:#159E86;
+    --danger:#D3483F;
+    --dest:#D3483F;
+    --wp:#3E6AE1;
+    --radius-lg:20px;
+    --radius-md:14px;
+    --radius-sm:10px;
+    --shadow-sheet:0 -8px 30px rgba(23,34,59,0.14);
+    --shadow-card:0 2px 10px rgba(23,34,59,0.08);
+    --shadow-compact:0 -4px 20px rgba(23,34,59,0.15);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100dvh;margin:0;overscroll-behavior:none;}
+  body{
+    font-family:'Manrope',system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--surface);
+    position:fixed;inset:0;
+    overflow:hidden;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit;}
+  input{font-family:inherit;}
+
+  /* ---------- MAP ---------- */
+  #map{position:absolute;inset:0;z-index:1;background:#DCE3EA;}
+  .leaflet-control-attribution{font-size:9px;opacity:.6;}
+
+  .crosshair-pin{
+    position:absolute;left:50%;top:50%;
+    transform:translate(-50%,-100%);
+    z-index:5;pointer-events:none;
+    display:none;flex-direction:column;align-items:center;
+    filter:drop-shadow(0 3px 4px rgba(23,34,59,.35));
+  }
+  .crosshair-pin.show{display:flex;}
+  .crosshair-pin svg{width:38px;height:38px;}
+  .crosshair-pin .dot{width:6px;height:6px;border-radius:50%;background:rgba(23,34,59,.45);margin-top:-4px;}
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    position:absolute;top:0;left:0;right:0;z-index:20;
+    padding:14px 14px 0;
+    display:flex;justify-content:space-between;align-items:flex-start;
+    pointer-events:none;
+  }
+  .topbar-right { display:flex; gap:10px; }
+  .icon-btn{
+    width:42px;height:42px;border-radius:50%;
+    background:var(--card);box-shadow:var(--shadow-card);
+    display:flex;align-items:center;justify-content:center;
+    pointer-events:auto;color:var(--ink);flex:none;
+  }
+  .icon-btn svg{width:20px;height:20px;}
+  .icon-btn:active{transform:scale(.94);}
+  .icon-btn.ghost{background:rgba(255,255,255,.92);}
+
+  /* ---------- TOP SETTINGS (COLLAPSIBLE) ---------- */
+  .top-menu{
+    position:absolute; top:0; left:0; right:0; z-index:25;
+    background:var(--card); box-shadow:var(--shadow-sheet);
+    border-radius:0 0 var(--radius-lg) var(--radius-lg);
+    padding:20px 18px; transform:translateY(-110%);
+    transition:transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    max-height: 85vh; overflow-y: auto;
+  }
+  .top-menu.show { transform:translateY(0); }
+  .top-menu-title { font-weight:800; font-size:16px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; }
+  .settings-row{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-top:8px;padding:12px 14px;background:var(--surface);border-radius:var(--radius-md);
+  }
+  .settings-row .label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--ink-soft);}
+  .price-edit{display:flex;align-items:center;gap:6px;}
+  .price-edit input{
+    width:75px;text-align:right;border:none;background:transparent;
+    font-size:14px;font-weight:700;color:var(--ink);
+  }
+  .price-edit input:focus{outline:none;}
+  .price-edit .unit{font-size:12px;color:var(--ink-soft);font-weight:600;}
+
+  /* Toggle Switch */
+  .toggle-switch { position:relative; width:42px; height:24px; }
+  .toggle-switch input { opacity:0; width:0; height:0; }
+  .toggle-slider {
+    position:absolute; cursor:pointer; inset:0;
+    background-color:var(--line); border-radius:24px; transition:.3s;
+  }
+  .toggle-slider:before {
+    position:absolute; content:""; height:18px; width:18px;
+    left:3px; bottom:3px; background-color:white;
+    border-radius:50%; transition:.3s;
+  }
+  .toggle-switch input:checked + .toggle-slider { background-color:var(--teal); }
+  .toggle-switch input:checked + .toggle-slider:before { transform:translateX(18px); }
+
+  .schedule-modal-overlay{position:fixed;inset:0;background:rgba(23,34,59,.55);z-index:120;display:none;align-items:center;justify-content:center;padding:20px;}
+  .schedule-modal-overlay.show{display:flex;}
+  .schedule-modal{background:#fff;border-radius:20px;width:100%;max-width:360px;padding:20px;box-shadow:0 15px 50px rgba(0,0,0,.25);}
+  .schedule-modal-head{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:16px;margin-bottom:14px;}
+  .schedule-close{width:34px;height:34px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;}
+  .service-rate{font-size:10.5px;color:var(--ink-soft);font-weight:700;margin-top:2px;text-align:center;}
+
+  /* ---------- SERVICE SCHEDULE ---------- */
+  .service-schedule-card{
+    margin:2px 0 14px;padding:13px 14px;
+    border:1px solid var(--line);border-radius:var(--radius-md);
+    background:linear-gradient(135deg,#FFFFFF 0%,#F7F9FC 100%);
+    box-shadow:0 2px 8px rgba(23,34,59,.05);
+  }
+  .schedule-summary{display:flex;align-items:center;gap:11px;}
+  .schedule-icon{
+    width:38px;height:38px;border-radius:12px;background:#E8F6F2;color:var(--teal);
+    display:flex;align-items:center;justify-content:center;flex:none;
+  }
+  .schedule-icon svg{width:19px;height:19px;}
+  .schedule-main{flex:1;min-width:0;}
+  .schedule-label{font-size:11px;font-weight:800;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.45px;}
+  .schedule-today{font-size:13.5px;font-weight:800;margin-top:2px;line-height:1.35;}
+  .schedule-badge{
+    font-size:10.5px;font-weight:800;padding:6px 9px;border-radius:20px;
+    background:#E8F6F2;color:#117864;white-space:nowrap;
+  }
+  .schedule-badge.closed{background:#FCEBE9;color:var(--danger);}
+  .schedule-toggle{
+    width:100%;display:flex;align-items:center;justify-content:center;gap:5px;
+    padding:8px 0 0;margin-top:9px;border-top:1px dashed var(--line);
+    color:var(--ink-soft);font-size:11.5px;font-weight:800;
+  }
+  .schedule-toggle svg{width:14px;height:14px;transition:transform .2s;}
+  .service-schedule-card.expanded .schedule-toggle svg{transform:rotate(180deg);}
+  .schedule-list{display:none;margin-top:9px;padding-top:3px;}
+  .service-schedule-card.expanded .schedule-list{display:block;}
+  .schedule-day{
+    display:flex;justify-content:space-between;gap:12px;padding:7px 2px;
+    border-bottom:1px solid var(--line);font-size:12px;
+  }
+  .schedule-day:last-child{border-bottom:none;}
+  .schedule-day span:first-child{font-weight:700;color:var(--ink-soft);}
+  .schedule-day b{font-weight:800;text-align:right;}
+  .schedule-day.today span:first-child,.schedule-day.today b{color:var(--teal);}
+  .schedule-day .holiday{color:var(--danger);}
+
+  /* ---------- SERVICE CHOICE ---------- */
+  .service-selector{margin-top:14px;}
+  .service-selector-title{
+    font-size:12px;font-weight:800;color:var(--ink-soft);text-transform:uppercase;
+    letter-spacing:.4px;margin-bottom:8px;
+  }
+  .service-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .service-option{
+    min-width:0;padding:11px 6px;border:1.5px solid var(--line);border-radius:var(--radius-sm);
+    background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:6px;color:var(--ink-soft);font-size:11px;font-weight:800;line-height:1.2;
+  }
+  .service-option svg{width:20px;height:20px;}
+  .service-option.active{
+    border-color:var(--teal);background:#EAF8F5;color:#117864;
+    box-shadow:0 2px 8px rgba(21,158,134,.12);
+  }
+  .service-option:active{transform:scale(.97);}
+
+  /* ---------- BOTTOM SHEET ---------- */
+  .sheet{
+    position:absolute;left:0;right:0;bottom:0;z-index:20;
+    background:var(--card);
+    border-radius:22px 22px 0 0;
+    box-shadow:var(--shadow-sheet);
+    max-height:88vh;
+    display:flex;flex-direction:column;
+    transition:transform .28s cubic-bezier(.32,.72,0,1), opacity 0.2s;
+  }
+  .sheet.minimized {
+    transform: translateY(120%);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .sheet-handle{width:100%;padding:10px 0 6px;display:flex;justify-content:center;flex:none;}
+  .sheet-handle span{
+    width:38px;height:4px;border-radius:3px;background:var(--line);
+    position:relative;
+  }
+  .sheet-body{padding:2px 18px 22px;overflow-y:auto;}
+  .sheet-title{font-size:17px;font-weight:800;letter-spacing:-.2px;margin:2px 0 14px;display:flex;align-items:center;justify-content:space-between;}
+  .btn-minimize { color:var(--ink-soft); display:flex; align-items:center; justify-content:center; padding:4px;}
+
+  /* ---------- COMPACT BOTTOM BAR ---------- */
+  .compact-bar{
+    position:absolute; left:0; right:0; bottom:0; z-index:15;
+    background:var(--ink); color:#fff;
+    border-radius:22px 22px 0 0; box-shadow:var(--shadow-compact);
+    padding:16px 20px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+    transform:translateY(120%); transition:transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    pointer-events:auto;
+  }
+  .compact-bar.show { transform:translateY(0); }
+  .cb-info { display:flex; flex-direction:column; gap:2px; flex:1; cursor:pointer;}
+  .cb-price { font-size:22px; font-weight:800; letter-spacing:-0.5px; }
+  .cb-dist { font-size:12.5px; font-weight:600; color:rgba(255,255,255,0.7); }
+  .cb-actions { display:flex; gap:10px; align-items:center;}
+  .cb-btn {
+    width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.15);
+    display:flex; align-items:center; justify-content:center; color:#fff;
+  }
+  .cb-btn:active { background:rgba(255,255,255,0.25); }
+
+  /* route stack */
+  .route-stack{position:relative;padding-left:26px;}
+  .route-rail{
+    position:absolute;left:9px;top:14px;bottom:14px;width:2px;
+    background:repeating-linear-gradient(to bottom,var(--line) 0 4px,transparent 4px 8px);
+  }
+  .route-row{
+    position:relative;display:flex;align-items:center;gap:10px;
+    padding:9px 0;
+  }
+  .route-dot{
+    position:absolute;left:-26px;top:50%;transform:translateY(-50%);
+    width:20px;height:20px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;flex:none;
+    background:var(--card);
+  }
+  .route-dot svg{width:14px;height:14px;}
+  .route-dot.origin{color:var(--origin);}
+  .route-dot.dest{color:var(--dest);}
+  .route-dot.waypoint{color:var(--wp);}
+
+  .route-field{
+    flex:1;min-width:0;
+    background:var(--surface);border-radius:var(--radius-sm);
+    padding:11px 12px;display:flex;align-items:center;gap:8px;
+    min-height:44px;
+  }
+  .route-field.empty .field-text{color:var(--ink-soft);font-weight:600;}
+  .field-text{flex:1;min-width:0;font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .field-clear{width:22px;height:22px;flex:none;color:var(--ink-soft);display:flex;align-items:center;justify-content:center;}
+  .field-clear svg{width:14px;height:14px;}
+
+  .swap-btn{
+    position:absolute; right:0; top:43px; width:34px; height:34px;
+    border-radius:50%; background:var(--card); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; color:var(--ink-soft);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06); z-index:10; cursor:pointer;
+  }
+  .swap-btn:active { transform:scale(0.9); }
+
+  .add-stop-btn{
+    display:flex;align-items:center;gap:8px;
+    padding:9px 2px;font-size:13px;font-weight:700;color:var(--wp);
+  }
+  .add-stop-btn svg{width:17px;height:17px;}
+
+  /* CTA */
+  .cta{
+    margin-top:16px;width:100%;padding:15px;border-radius:var(--radius-md);
+    background:var(--ink);color:#fff;font-weight:800;font-size:15px;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    transition:opacity .15s, transform .1s;
+  }
+  .cta[disabled]{opacity:.35;pointer-events:none;}
+  .cta:active{transform:scale(.98);}
+  .cta svg{width:18px;height:18px;}
+  .cta.loading svg{animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .nav-btn {
+    margin-top:14px;width:100%;padding:13px;border-radius:var(--radius-md);
+    background:#4285F4;color:#fff;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .nav-btn svg { width:18px;height:18px; }
+
+  /* ---------- RESULT VIEW ---------- */
+  .result{display:none;}
+  .result.show{display:block;}
+  .result-actions-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;}
+  .result-back{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--ink-soft);}
+  .result-back svg{width:16px;height:16px;}
+
+  .meter-card{
+    background:linear-gradient(155deg,var(--ink) 0%, #223052 100%);
+    border-radius:var(--radius-lg);padding:20px 20px 18px;color:#fff;margin-bottom:16px;
+    position:relative;overflow:hidden;
+  }
+  .meter-card::after{
+    content:'';position:absolute;right:-30px;top:-30px;width:130px;height:130px;border-radius:50%;
+    background:radial-gradient(circle,rgba(217,140,43,.35),transparent 70%);
+  }
+  .meter-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.6);}
+  .meter-value{font-size:34px;font-weight:700;margin-top:4px;letter-spacing:-.5px;position:relative;z-index:1;}
+  .meter-value .curr{font-size:18px;vertical-align:2px;color:var(--accent);margin-right:2px;}
+  .meter-sub{display:flex;gap:16px;margin-top:12px;position:relative;z-index:1;flex-wrap:wrap;}
+  .meter-sub div{font-size:12px;color:rgba(255,255,255,.65);}
+  .meter-sub b{display:block;font-size:15px;color:#fff;font-weight:700;margin-top:1px;}
+
+  .ruler{margin-top:16px;position:relative;z-index:1;}
+  .ruler-track{height:6px;border-radius:4px;background:rgba(255,255,255,.14);overflow:hidden;}
+  .ruler-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--accent));border-radius:4px;transition:width .9s cubic-bezier(.16,1,.3,1);}
+  .ruler-ticks{display:flex;justify-content:space-between;margin-top:5px;}
+  .ruler-ticks span{font-size:9px;color:rgba(255,255,255,.4);font-weight:600;}
+
+  .segment-list{margin-top:2px;}
+  .segment-title{font-size:12px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.4px;margin:14px 0 8px;}
+  .segment{
+    display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);
+  }
+  .segment:last-child{border-bottom:none;}
+  .segment-icon{width:26px;height:26px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;flex:none;color:var(--ink-soft);}
+  .segment-icon svg{width:13px;height:13px;}
+  .segment-text{flex:1;min-width:0;}
+  .segment-route{font-size:12.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .segment-dist{font-size:11px;color:var(--ink-soft);margin-top:1px;}
+  .segment-fare{font-size:12.5px;font-weight:700;flex:none;}
+
+  .action-grid { display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;}
+  .btn-full { grid-column: span 2; }
+  .recalc-btn{
+    width:100%;padding:13px;border-radius:var(--radius-md);
+    background:var(--surface);color:var(--ink);font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .share-btn {
+    width:100%;padding:13px;border-radius:var(--radius-md);
+    background:var(--accent);color:#fff;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .share-btn svg, .recalc-btn svg{width:16px;height:16px;}
+
+  /* ---------- MODAL PAYMENT ---------- */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(23,34,59,0.6); z-index: 100;
+    display: none; align-items: center; justify-content: center; padding: 20px;
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .modal-overlay.show { display: flex; opacity: 1; }
+  .modal-card {
+    background: var(--card); border-radius: var(--radius-lg);
+    width: 100%; max-width: 340px; padding: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2); transform: translateY(20px); transition: transform 0.2s;
+  }
+  .modal-overlay.show .modal-card { transform: translateY(0); }
+  .modal-title { font-size: 16px; font-weight: 800; margin-bottom: 12px; display:flex; justify-content:space-between; align-items:center;}
+
+  .pay-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px; background: var(--surface); border-radius: var(--radius-sm); margin-bottom: 8px;
+  }
+  .pay-item:last-child { margin-bottom: 0; }
+  .pay-item-info { display: flex; flex-direction: column; }
+  .pay-bank { font-size: 11px; color: var(--ink-soft); font-weight: 700; text-transform: uppercase; margin-bottom: 2px;}
+  .pay-acc { font-size: 15px; font-weight: 800; font-family: 'IBM Plex Mono', monospace; color: var(--ink); }
+  .btn-copy {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--card); color: var(--teal);
+    display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-card);
+  }
+  .btn-copy:active { transform: scale(0.92); }
+
+  /* ---------- SEARCH PANEL ---------- */
+  .search-panel{
+    position:fixed;inset:0;z-index:50;background:var(--card);
+    display:flex;flex-direction:column;
+    transform:translateY(100%);transition:transform .26s cubic-bezier(.32,.72,0,1);
+  }
+  .search-panel.show{transform:translateY(0);}
+  .search-head{
+    display:flex;align-items:center;gap:10px;padding:14px 14px 10px;flex:none;
+    border-bottom:1px solid var(--line);
+  }
+  .search-input-wrap{
+    flex:1;background:var(--surface);border-radius:var(--radius-sm);
+    display:flex;align-items:center;gap:8px;padding:0 12px;height:44px;
+  }
+  .search-input-wrap svg{width:16px;height:16px;color:var(--ink-soft);flex:none;}
+  .search-input-wrap input{
+    flex:1;border:none;background:transparent;font-size:14px;font-weight:600;color:var(--ink);height:100%;
+  }
+  .search-input-wrap input:focus{outline:none;}
+  .search-input-wrap .clear-x{display:none;color:var(--ink-soft);}
+  .search-input-wrap .clear-x svg{width:14px;height:14px;}
+
+  .search-body{flex:1;overflow-y:auto;padding:6px 6px 20px;}
+  .quick-actions{padding:6px 8px 4px;}
+  .quick-action{
+    display:flex;align-items:center;gap:12px;padding:12px 8px;border-radius:var(--radius-sm);
+  }
+  .quick-action:active{background:var(--surface);}
+  .quick-action .qa-icon{
+    width:36px;height:36px;border-radius:50%;background:var(--surface);
+    display:flex;align-items:center;justify-content:center;flex:none;color:var(--teal);
+  }
+  .quick-action .qa-icon svg{width:18px;height:18px;}
+  .quick-action .qa-text b{display:block;font-size:13.5px;font-weight:700;}
+  .quick-action .qa-text span{font-size:11.5px;color:var(--ink-soft);}
+
+  .result-list{padding:4px 8px;}
+  .result-item{
+    display:flex;align-items:flex-start;gap:12px;padding:11px 8px;border-radius:var(--radius-sm);
+  }
+  .result-item:active{background:var(--surface);}
+  .result-item .ri-icon{width:30px;height:30px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;flex:none;color:var(--ink-soft);margin-top:1px;}
+  .result-item .ri-icon svg{width:14px;height:14px;}
+  .result-item .ri-text b{display:block;font-size:13.5px;font-weight:700;line-height:1.35;}
+  .result-item .ri-text span{font-size:11.5px;color:var(--ink-soft);line-height:1.4;display:block;margin-top:1px;}
+  .search-empty{padding:30px 20px;text-align:center;color:var(--ink-soft);font-size:12.5px;}
+
+  /* map-pick mode */
+  .pick-bar{
+    position:fixed;left:0;right:0;bottom:0;z-index:60;
+    background:var(--card);border-radius:22px 22px 0 0;box-shadow:var(--shadow-sheet);
+    padding:16px 18px 22px;display:none;
+  }
+  .pick-bar.show{display:block;}
+  .pick-address{font-size:13.5px;font-weight:700;margin-bottom:2px;line-height:1.4;min-height:19px;}
+  .pick-sub{font-size:11.5px;color:var(--ink-soft);margin-bottom:12px;}
+  .pick-confirm{
+    width:100%;padding:14px;border-radius:var(--radius-md);background:var(--ink);color:#fff;
+    font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .pick-confirm svg{width:16px;height:16px;}
+  .pick-cancel{
+    width:100%;padding:10px;margin-top:6px;text-align:center;font-size:12.5px;font-weight:700;color:var(--ink-soft);
+  }
+
+  /* toast */
+  .toast{
+    position:fixed;left:50%;top:16px;transform:translate(-50%,-140%);z-index:80;
+    background:var(--ink);color:#fff;font-size:12.5px;font-weight:700;
+    padding:10px 16px;border-radius:30px;box-shadow:0 4px 14px rgba(23,34,59,.25);
+    transition:transform .25s cubic-bezier(.32,.72,0,1);white-space:nowrap;
+  }
+  .toast.show{transform:translate(-50%,0);}
+
+  /* leaflet marker label badges */
+  .pt-badge{
+    width:26px;height:34px;position:relative;
+  }
+  .pt-badge svg{width:100%;height:100%;filter:drop-shadow(0 2px 3px rgba(23,34,59,.35));}
+  .pt-badge .num{
+    position:absolute;top:5px;left:0;right:0;text-align:center;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;color:#fff;
+  }
 </style>
 </head>
 <body>
 <h1 style="position:absolute;left:-9999px;">Ojek Motor Pamulang Tangerang Selatan - Ojek Om Yanu</h1>
-<div class='section' id='1'><div class='widget HTML' data-version='2' id='HTML1'>
-<div class='widget-content'>
+<div class="section" id="1"><div class="widget HTML" data-version="2" id="HTML1">
+<div class="widget-content">
 <script>
-              const ROUTING_CONFIG = {
-  profile: "motorcycle",
-  avoidToll: true,
-  avoidMotorway: true
+const APP_CONFIG = {
+  // 1. Identitas Web
+  namaAplikasi: "Ojek Om Yanu",
+  wilayahLayanan: "Pamulang, Tangerang Selatan, Banten",
+  areaOperasional: [
+    "Pamulang",
+    "Ciputat",
+    "Serpong",
+    "Pondok Aren",
+    "Tangerang Selatan"
+  ],
+
+  // Tampilkan/sembunyikan tombol Pengaturan.
+  tampilkanTombolSettings: false,
+
+  // 2. Tema Warna Merek (Gunakan kode HEX)
+  warna: {
+    gelapTeks: "#17223B",
+    aksenUtama: "#D98C2B",
+    titikAwal: "#159E86"
+  },
+
+  // 3. Lokasi Default Peta Saat Dibuka [Latitude, Longitude]
+  titikPusatPeta: [-6.3426, 106.7389],
+  zoomPeta: 16,
+
+  // 4. Harga / Tarif Dasar
+  tarif: {
+    jarakMinimalKm: 0,
+    ongkosMinimalRp: 0,
+    tarifLayanan: {
+      penumpang: 4000,
+      barang: 3000,
+      belanja: 3000
+    },
+    biayaJasaBelanja: 5000
+  },
+  layananAktif: {
+    penumpang: true,
+    barang: true,
+    belanja: true
+  },
+
+  // 5. Jadwal Layanan Mingguan
+  jadwalLayanan: {
+    zonaWaktu: "Asia/Jakarta",
+    hari: [
+      { nama: "Minggu", buka: "", tutup: "", libur: true },
+      { nama: "Senin", buka: "07:00", tutup: "21:00", libur: false },
+      { nama: "Selasa", buka: "07:00", tutup: "21:00", libur: false },
+      { nama: "Rabu", buka: "07:00", tutup: "21:00", libur: false },
+      { nama: "Kamis", buka: "07:00", tutup: "21:00", libur: false },
+      { nama: "Jumat", buka: "07:00", tutup: "21:00", libur: false },
+      { nama: "Sabtu", buka: "07:00", tutup: "21:00", libur: false }
+    ]
+  },
+
+  // 6. Data Rekening Default
+  rekening: {
+    name: "Yanuar Zhaldy G",
+    dana: "089507785333",
+    shopeepay: "089507785333",
+    gopay: "089507785333",
+    bri: "012001067003502",
+    jago: "108281218767",
+    seabank: "901030071975"
+  },
+
+  // 7. Pengaturan Pesan dan Share
+  whatsappAdmin: "089507785333",
+
+  teksBagikan: function(urlLink, infoBayar, rincian) {
+    const statusPerjalanan = rincian.pulangPergi ? "Pulang - Pergi" : "Sekali Jalan";
+    const infoJasa = rincian.biayaJasa > 0 ? `\n🛍 *Biaya Jasa Belanja:* Rp ${rincian.biayaJasaFormatted}` : '';
+
+    return `Halo kak, berikut rincian jarak dan estimasi ongkos pengiriman atau ojek kami.\n\n🛵 *Pilihan Layanan:* ${rincian.layanan}\n💰 *Total Ongkos:* ${rincian.totalOngkos}${infoJasa}\n🛣 *Jarak Tempuh:* ${rincian.jarak}\n🔄 *Perjalanan:* ${statusPerjalanan}\n\n📍 Cek rute atau ubah rincian langsung di web:\n${urlLink}${infoBayar}`;
+  }
 };
 
-const APP_CONFIG = {
-    // 1. Identitas Web
-    namaAplikasi: "Ojek Om Yanu",
-    wilayahLayanan: "Pamulang, Tangerang Selatan, Banten",
-    areaOperasional: [
-      "Pamulang",
-      "Ciputat",
-      "Serpong",
-      "Pondok Aren",
-      "Tangerang Selatan"
-    ],
+document.title = APP_CONFIG.namaAplikasi;
+document.documentElement.style.setProperty('--ink', APP_CONFIG.warna.gelapTeks);
+document.documentElement.style.setProperty('--accent', APP_CONFIG.warna.aksenUtama);
+document.documentElement.style.setProperty('--origin', APP_CONFIG.warna.titikAwal);
+</script>
 
-    // Tampilkan/sembunyikan tombol Pengaturan.
-    // false = disembunyikan, true = ditampilkan.
-    tampilkanTombolSettings: false,
-
-    // 2. Tema Warna Merek (Gunakan kode HEX)
-    warna: {
-      gelapTeks: "#17223B",    // Warna dominan (teks, background popup, header)
-      aksenUtama: "#D98C2B",   // Warna tombol Share, penggaris progress, sorotan
-      titikAwal: "#159E86"     // Warna untuk icon penanda lokasi asal (origin)
-    },
-
-    // 3. Lokasi Default Peta Saat Dibuka [Latitude, Longitude]
-    // Saat ini diatur di Jakarta Pusat. Silakan ganti ke koordinat kota Anda.
-    titikPusatPeta: [-6.3426,106.7389],
-    zoomPeta: 16,
-
-    // 4. Harga / Tarif Dasar
-    tarif: {
-      jarakMinimalKm: 0,
-      ongkosMinimalRp: 0,
-      tarifLayanan: {
-        penumpang: 4000,
-        barang: 3000,
-        belanja: 3000
-      },
-      biayaJasaBelanja: 5000
-    },
-    layananAktif: {
-      penumpang: true,
-      barang: true,
-      belanja: true
-    },
-
-    // 5. Jadwal Layanan Mingguan
-    // Ubah jam buka/tutup sesuai kebutuhan. Gunakan libur: true untuk menampilkan "Libur".
-    jadwalLayanan: {
-      zonaWaktu: "Asia/Jakarta",
-      hari: [
-        { nama: "Minggu", buka: "", tutup: "", libur: true },
-        { nama: "Senin", buka: "07:00", tutup: "21:00", libur: false },
-        { nama: "Selasa", buka: "07:00", tutup: "21:00", libur: false },
-        { nama: "Rabu", buka: "07:00", tutup: "21:00", libur: false },
-        { nama: "Kamis", buka: "07:00", tutup: "21:00", libur: false },
-        { nama: "Jumat", buka: "07:00", tutup: "21:00", libur: false },
-        { nama: "Sabtu", buka: "07:00", tutup: "21:00", libur: false }
-      ]
-    },
-
-    // 6. Data Rekening Default (Otomatis muncul di info bayar)
-    rekening: {
-      name: "Yanuar Zhaldy G",
-      dana: "089507785333",
-      shopeepay: "089507785333",
-      gopay: "089507785333",
-      bri: "012001067003502",
-      jago: "108281218767",
-      seabank: "901030071975"
-    },
-
-    // 7. Pengaturan Pesan dan Share
-    // Nomor tujuan tombol "Pesan Sekarang". Boleh diawali 0, 62, atau +62.
-    whatsappAdmin: "089507785333",
-
-    // Template ini dipakai bersama oleh tombol "Pesan Sekarang" dan fitur Bagikan.
-    // Parameter rincian berisi totalOngkos, jarak, layanan, dan pulangPergi.
-    teksBagikan: function(urlLink, infoBayar, rincian) {
-      const statusPerjalanan = rincian.pulangPergi ? "Pulang - Pergi" : "Sekali Jalan";
-
-      return `Halo kak, berikut rincian jarak dan estimasi ongkos pengiriman atau ojek kami.\n\n🛵 *Pilihan Layanan:* ${rincian.layanan}\n💰 *Total Ongkos:* ${rincian.totalOngkos}\n🛣 *Jarak Tempuh:* ${rincian.jarak}\n🔄 *Perjalanan:* ${statusPerjalanan}\n\n📍 Cek rute atau ubah rincian langsung di web:\n${urlLink}${infoBayar}`;
-    }
-  };
-  document.title = APP_CONFIG.namaAplikasi;  document.documentElement.style.setProperty('--ink', APP_CONFIG.warna.gelapTeks);
-document.documentElement.style.setProperty('--accent', APP_CONFIG.warna.aksenUtama);  document.documentElement.style.setProperty('--origin', APP_CONFIG.warna.titikAwal);
-            </script>
-<div id='map' aria-label='Peta rute ojek motor Pamulang Tangerang Selatan'></div>
-<div class='crosshair-pin' id='crosshairPin'>
-<svg fill='none' viewBox='0 0 24 32'><path d='M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12z' fill='#17223B'></path><circle cx='12' cy='12' fill='#fff' r='4.4'></circle></svg>
-<div class='dot'></div>
+<div id="map" aria-label="Peta rute ojek motor Pamulang Tangerang Selatan"></div>
+<div class="crosshair-pin" id="crosshairPin">
+  <svg fill="none" viewBox="0 0 24 32"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12z" fill="#17223B"></path><circle cx="12" cy="12" fill="#fff" r="4.4"></circle></svg>
+  <div class="dot"></div>
 </div>
-<div class='topbar'>
-<button aria-label='Lokasi saya' class='icon-btn ghost' id='btnLocate'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'><circle cx='12' cy='12' r='3'></circle><path d='M12 2v3M12 19v3M2 12h3M19 12h3M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z'></path></svg>
-</button>
-<div class='topbar-right'>
-<button aria-label='Layar Penuh' class='icon-btn ghost' id='btnFullscreen'>
-<svg fill='none' id='iconExpandFS' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' viewBox='0 0 24 24'><path d='M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3'></path></svg>
-<svg fill='none' id='iconShrinkFS' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' style='display:none;' viewBox='0 0 24 24'><path d='M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3'></path></svg>
-</button>
-<button aria-label='Info Jadwal Layanan' class='icon-btn ghost' id='btnInfoSchedule'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' viewBox='0 0 24 24'><circle cx='12' cy='12' r='9'></circle><path d='M12 10v6'></path><circle cx='12' cy='7' r='1'></circle></svg>
-</button>
-<button aria-label='Reset Rute' class='icon-btn ghost' id='btnReset' style='color:var(--danger);'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' viewBox='0 0 24 24'><path d='M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8'></path><path d='M3 3v5h5'></path></svg>
-</button>
-<button aria-label='Pengaturan' class='icon-btn ghost' id='btnSettings'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'><path d='M4 6h10M18 6h2M4 12h2M8 12h12M4 18h14M20 18h0'></path><circle cx='16' cy='6' fill='currentColor' r='2.2'></circle><circle cx='6' cy='12' fill='currentColor' r='2.2'></circle><circle cx='18' cy='18' fill='currentColor' r='2.2'></circle></svg>
-</button>
-</div>
-</div>
-<div class='top-menu' id='topMenu'>
-<div class='top-menu-title'>
-                Pengaturan Kalkulator
-                <button id='btnCloseSettings' style='color:var(--ink-soft);'><svg fill='none' height='20' stroke='currentColor' stroke-linecap='round' stroke-width='2.5' viewBox='0 0 24 24' width='20'><path d='M18 6L6 18M6 6l12 12'></path></svg></button>
-</div>
-<div class='settings-row'>
-<div class='label'>Jarak Dasar Minimal</div>
-<div class='price-edit'>
-<input id='minKm' inputmode='numeric' type='number'/>
-<span class='unit'>km</span>
-</div>
-</div>
-<div class='settings-row'>
-<div class='label'>Ongkos Dasar Minimal</div>
-<div class='price-edit'>
-<span class='unit'>Rp</span>
-<input id='minFare' inputmode='numeric' type='number'/>
-</div>
-</div>
-<div class='settings-row'>
-<div class='label'>Aktifkan Penumpang</div>
-<label class='toggle-switch'><input id='togglePenumpang' type='checkbox' checked/><span class='toggle-slider'></span></label>
-</div>
-<div class='settings-row'>
-<div class='label'>Aktifkan Barang</div>
-<label class='toggle-switch'><input id='toggleBarang' type='checkbox' checked/><span class='toggle-slider'></span></label>
-</div>
-<div class='settings-row'>
-<div class='label'>Aktifkan Belanja</div>
-<label class='toggle-switch'><input id='toggleBelanja' type='checkbox' checked/><span class='toggle-slider'></span></label>
-</div>
-<div class='settings-row' style='border-top:1px dashed var(--line); margin-top:12px; padding-top:16px;'>
-<div class='label' style='color:var(--ink);'>Tarif per Km (> Minimal)</div>
-<div class='price-edit'>
-<span class='unit'>Rp</span>
-<input id='pricePerKm' inputmode='numeric' type='number'/>
-<span class='unit'>/km</span>
-</div>
-</div>
-<div class='settings-row' style='border-top:1px dashed var(--line); margin-top:16px; padding-top:16px; margin-bottom:8px;'>
-<div class='label' style='color:var(--ink); width:100%; font-size:14px;'>Rekening & E-Wallet</div>
-</div>
-<div class='settings-row'><div class='label'>Atas Nama</div><div class='price-edit'><input id='payName' style='width:140px; text-align:right;' type='text'/></div></div>
-<div class='settings-row'><div class='label'>DANA</div><div class='price-edit'><input id='payDana' inputmode='numeric' style='width:140px; text-align:right;' type='text'/></div></div>
-<div class='settings-row'><div class='label'>OVO</div><div class='price-edit'><input id='payOvo' inputmode='numeric' style='width:140px; text-align:right;' type='text'/></div></div>
-<div class='settings-row'><div class='label'>GOPAY</div><div class='price-edit'><input id='payGopay' inputmode='numeric' style='width:140px; text-align:right;' type='text'/></div></div>
-<div class='settings-row'><div class='label'>ShopeePay</div><div class='price-edit'><input id='payShopee' inputmode='numeric' style='width:140px; text-align:right;' type='text'/></div></div>
-<div class='settings-row'><div class='label'>BSI</div><div class='price-edit'><input id='payBsi' inputmode='numeric' style='width:140px; text-align:right;' type='text'/></div></div>
-<div class='settings-row'><div class='label'>BRI</div><div class='price-edit'><input id='payBri' inputmode='numeric' style='width:140px; text-align:right;' type='text'/></div></div>
-<div class='settings-row'><div class='label'>Jago</div><div class='price-edit'><input id='payJago' inputmode='numeric' style='width:140px; text-align:right;' type='text'/></div></div>
-<div class='settings-row'><div class='label'>Seabank</div><div class='price-edit'><input id='paySeabank' inputmode='numeric' style='width:140px; text-align:right;' type='text'/></div></div>
-</div>
-<div class='sheet' id='sheet'>
-<div class='sheet-handle'><span></span></div>
-<div class='sheet-body'>
-<div id='formView'>
-<div class='sheet-title'>
-<span>Hitung Ongkos</span>
-<button aria-label='Minimize' class='btn-minimize' id='btnMinimizeSheet'>
-<svg fill='none' height='22' stroke='currentColor' stroke-linecap='round' stroke-width='2.5' viewBox='0 0 24 24' width='22'><path d='M6 9l6 6 6-6'></path></svg>
-</button>
-</div>
-<div class='service-schedule-card' id='serviceScheduleCard' style='display:none;'>
-<div class='schedule-summary'>
-<div class='schedule-icon'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.1' viewBox='0 0 24 24'><circle cx='12' cy='12' r='9'></circle><path d='M12 7v5l3 2'></path></svg>
-</div>
-<div class='schedule-main'>
-<div class='schedule-label'>Jadwal Layanan</div>
-<div class='schedule-today' id='scheduleTodayText'>Memuat jadwal...</div>
-</div>
-<div class='schedule-badge' id='scheduleStatusBadge'>...</div>
-</div>
-<div class='schedule-list' id='scheduleList'></div>
-<button class='schedule-toggle' id='btnToggleSchedule' type='button'>
-<span>Lihat semua jadwal</span>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' viewBox='0 0 24 24'><path d='M6 9l6 6 6-6'></path></svg>
-</button>
-</div>
-<div class='route-stack' id='routeStack'>
-<div class='route-rail'></div>
-</div>
-<button class='add-stop-btn' id='btnAddStop'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-width='2.4' viewBox='0 0 24 24'><path d='M12 5v14M5 12h14'></path></svg>
-                    Tambah tujuan baru
-                  </button>
-<div class='service-selector'>
-<div class='service-selector-title'>Pilihan Layanan <span id='selectedServiceRate' style='float:right;color:var(--teal)'>Rp 4.000/km</span></div>
-<div class='service-options' id='serviceOptions'>
-<button aria-pressed='true' class='service-option active' data-service='Penumpang' type='button'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'><path d='M5 16c0-3 2-6 7-6s7 3 7 6'></path><path d='M8 10a4 4 0 0 1 8 0'></path><path d='M7 16h10'></path></svg>
-<span>Penumpang</span><small class='service-rate'>Rp 4.000/km</small>
-</button>
-<button aria-pressed='false' class='service-option' data-service='Barang' type='button'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'><path d='M4 7h16v12H4z'></path><path d='M8 7V4h8v3'></path><path d='M4 12h16'></path></svg>
-<span>Barang</span><small class='service-rate'>Rp 3.000/km</small>
-</button>
-<button aria-pressed='false' class='service-option' data-service='Belanja' type='button'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'><path d='M6 8h12l-1 12H7z'></path><path d='M9 9V6a3 3 0 0 1 6 0v3'></path></svg>
-<span>Belanja</span><small class='service-rate'>Sesuai pengaturan</small>
-</button>
-</div>
-</div>
-<div class='settings-row' style='margin-top:14px; margin-bottom:16px; background:#FBF1E1;'>
-<div class='label' style='color:var(--accent-ink);'>Pulang - Pergi (Round-Trip)</div>
-<label class='toggle-switch'>
-<input id='toggleRoundTrip' type='checkbox'/>
-<span class='toggle-slider'></span>
-</label>
-</div>
-<button class='cta' disabled='disabled' id='btnCalc'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' viewBox='0 0 24 24'><path d='M3 12h4l3-9 4 18 3-9h4'></path></svg>
-                    Hitung Jarak & Ongkos
-                  </button>
-</div>
-<div class='result' id='resultView'>
-<div class='result-actions-top'>
-<button class='result-back' id='btnBack'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.4' viewBox='0 0 24 24'><path d='M15 18l-6-6 6-6'></path></svg>
-                      Ubah rute
-                    </button>
-<button aria-label='Minimize' class='btn-minimize' id='btnMinimizeResult'>
-<svg fill='none' height='22' stroke='currentColor' stroke-linecap='round' stroke-width='2.5' viewBox='0 0 24 24' width='22'><path d='M6 9l6 6 6-6'></path></svg>
-</button>
-</div>
-<div class='meter-card'>
-<div class='meter-label'>Estimasi ongkos</div>
-<div class='meter-value mono'><span class='curr'>Rp</span><span id='fareValue'>0</span></div>
-<div class='meter-sub'>
-<div>Jarak tempuh<b class='mono' id='distValue'>0 km</b></div>
-<div>Tarif/km<b class='mono' id='rateValue'>Rp 0</b></div>
-<div>Layanan<b id='serviceValue'>Penumpang</b></div>
-</div>
-<div class='ruler'>
-<div class='ruler-track'><div class='ruler-fill' id='rulerFill'></div></div>
-<div class='ruler-ticks'><span>0</span><span id='rulerMid'>&#183;</span><span id='rulerMax'>km</span></div>
-</div>
-</div>
-<div class='segment-list' id='segmentList'></div>
-<button class='nav-btn btn-full' id='btnNavMaps'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' viewBox='0 0 24 24'><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'></path><polyline points='9 22 9 12 15 12 15 22'></polyline></svg>
-                    Mulai Navigasi (Google Maps)
-                  </button>
-<div class='action-grid'>
-<button class='recalc-btn' id='btnPayment' style='background:#E3E7EE; color:var(--ink);'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' viewBox='0 0 24 24'><rect height='16' rx='2' ry='2' width='22' x='1' y='4'></rect><line x1='1' x2='23' y1='10' y2='10'></line></svg>
-                      Info Bayar
-                    </button>
-<button class='recalc-btn' id='btnRecalc'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' viewBox='0 0 24 24'><path d='M3 12a9 9 0 1 0 3-6.7M3 4v5h5'></path></svg>
-                      Hitung ulang
-                    </button>
-<button class='share-btn btn-full' onclick='handleShare(this, false)'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' viewBox='0 0 24 24'><path d='M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6A8.38 8.38 0 0 1 12.5 3h.5a8.48 8.48 0 0 1 8 8z'></path></svg>
-                      Pesan Sekarang
-                    </button>
-</div>
-</div>
-</div>
-</div>
-<div class='compact-bar' id='compactBar'>
-<div class='cb-info' id='cbInfo'>
-<div class='cb-price mono' id='cbPrice'>Rp 0</div>
-<div class='cb-dist' id='cbDist'>0 km &#8226; 0 tujuan</div>
-</div>
-<div class='cb-actions'>
-<button aria-label='Bagikan' class='cb-btn' onclick='handleShare(this, true)'>
-<svg fill='none' height='18' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' viewBox='0 0 24 24' width='18'><circle cx='18' cy='5' r='3'></circle><circle cx='6' cy='12' r='3'></circle><circle cx='18' cy='19' r='3'></circle><line x1='8.59' x2='15.42' y1='13.51' y2='17.49'></line><line x1='15.41' x2='8.59' y1='6.51' y2='10.49'></line></svg>
-</button>
-<button aria-label='Perbesar Layar' class='cb-btn' id='cbExpand'>
-<svg fill='none' height='20' stroke='currentColor' stroke-linecap='round' stroke-width='2.5' viewBox='0 0 24 24' width='20'><path d='M18 15l-6-6-6 6'></path></svg>
-</button>
-</div>
-</div>
-<div class='modal-overlay' id='paymentModal'>
-<div class='modal-card'>
-<div class='modal-title'>
-                  Pilihan Pembayaran
-                  <button id='btnClosePayment' style='color:var(--ink-soft);'><svg fill='none' height='20' stroke='currentColor' stroke-linecap='round' stroke-width='2.5' viewBox='0 0 24 24' width='20'><path d='M18 6L6 18M6 6l12 12'></path></svg></button>
-</div>
-<div class='modal-body' id='paymentListContainer'>
-</div>
-<div style='margin-top:16px;'>
-<button class='recalc-btn' id='btnModalClose' style='font-weight:700;'>Tutup</button>
-</div>
-</div>
-</div>
-
-<div class='schedule-modal-overlay' id='scheduleModal'>
- <div class='schedule-modal'>
-  <div class='schedule-modal-head'>
-   <span>Jadwal Layanan</span>
-   <button class='schedule-close' id='btnCloseSchedule'>✕</button>
+<div class="topbar">
+  <button aria-label="Lokasi saya" class="icon-btn ghost" id="btnLocate">
+    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"></path></svg>
+  </button>
+  <div class="topbar-right">
+    <button aria-label="Layar Penuh" class="icon-btn ghost" id="btnFullscreen">
+      <svg fill="none" id="iconExpandFS" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      <svg fill="none" id="iconShrinkFS" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" style="display:none;" viewBox="0 0 24 24"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>
+    </button>
+    <button aria-label="Info Jadwal Layanan" class="icon-btn ghost" id="btnInfoSchedule">
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 10v6"></path><circle cx="12" cy="7" r="1"></circle></svg>
+    </button>
+    <button aria-label="Reset Rute" class="icon-btn ghost" id="btnReset" style="color:var(--danger);">
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+    </button>
+    <button aria-label="Pengaturan" class="icon-btn ghost" id="btnSettings">
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h2M8 12h12M4 18h14M20 18h0"></path><circle cx="16" cy="6" fill="currentColor" r="2.2"></circle><circle cx="6" cy="12" fill="currentColor" r="2.2"></circle><circle cx="18" cy="18" fill="currentColor" r="2.2"></circle></svg>
+    </button>
   </div>
-  <div id='scheduleModalContent'></div>
- </div>
 </div>
-<div class='search-panel' id='searchPanel'>
-<div class='search-head'>
-<button class='icon-btn' id='btnCloseSearch' style='box-shadow:none;background:var(--surface);'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-width='2.3' viewBox='0 0 24 24'><path d='M18 6L6 18M6 6l12 12'></path></svg>
-</button>
-<div class='search-input-wrap'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-width='2' viewBox='0 0 24 24'><circle cx='11' cy='11' r='7'></circle><path d='M21 21l-4.3-4.3'></path></svg>
-<input autocomplete='off' id='searchInput' placeholder='Ketik alamat atau nama tempat' type='text'/>
-<button class='clear-x' id='btnClearSearch'><svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-width='2.3' viewBox='0 0 24 24'><path d='M18 6L6 18M6 6l12 12'></path></svg></button>
+
+<div class="top-menu" id="topMenu">
+  <div class="top-menu-title">
+    Pengaturan Kalkulator
+    <button id="btnCloseSettings" style="color:var(--ink-soft);"><svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewBox="0 0 24 24" width="20"><path d="M18 6L6 18M6 6l12 12"></path></svg></button>
+  </div>
+  <div class="settings-row">
+    <div class="label">Jarak Dasar Minimal</div>
+    <div class="price-edit">
+      <input id="minKm" inputmode="numeric" type="number"/>
+      <span class="unit">km</span>
+    </div>
+  </div>
+  <div class="settings-row">
+    <div class="label">Ongkos Dasar Minimal</div>
+    <div class="price-edit">
+      <span class="unit">Rp</span>
+      <input id="minFare" inputmode="numeric" type="number"/>
+    </div>
+  </div>
+  <div class="settings-row">
+    <div class="label">Aktifkan Penumpang</div>
+    <label class="toggle-switch"><input id="togglePenumpang" type="checkbox" checked/><span class="toggle-slider"></span></label>
+  </div>
+  <div class="settings-row">
+    <div class="label">Aktifkan Barang</div>
+    <label class="toggle-switch"><input id="toggleBarang" type="checkbox" checked/><span class="toggle-slider"></span></label>
+  </div>
+  <div class="settings-row">
+    <div class="label">Aktifkan Belanja</div>
+    <label class="toggle-switch"><input id="toggleBelanja" type="checkbox" checked/><span class="toggle-slider"></span></label>
+  </div>
+  <div class="settings-row" style="border-top:1px dashed var(--line); margin-top:12px; padding-top:16px;">
+    <div class="label" style="color:var(--ink);">Tarif Penumpang /km</div>
+    <div class="price-edit">
+      <span class="unit">Rp</span>
+      <input id="pricePerKm" inputmode="numeric" type="number"/>
+      <span class="unit">/km</span>
+    </div>
+  </div>
+  <div class="settings-row" style="border-top:1px dashed var(--line); margin-top:16px; padding-top:16px; margin-bottom:8px;">
+    <div class="label" style="color:var(--ink); width:100%; font-size:14px;">Rekening &amp; E-Wallet</div>
+  </div>
+  <div class="settings-row"><div class="label">Atas Nama</div><div class="price-edit"><input id="payName" style="width:140px; text-align:right;" type="text"/></div></div>
+  <div class="settings-row"><div class="label">DANA</div><div class="price-edit"><input id="payDana" inputmode="numeric" style="width:140px; text-align:right;" type="text"/></div></div>
+  <div class="settings-row"><div class="label">OVO</div><div class="price-edit"><input id="payOvo" inputmode="numeric" style="width:140px; text-align:right;" type="text"/></div></div>
+  <div class="settings-row"><div class="label">GOPAY</div><div class="price-edit"><input id="payGopay" inputmode="numeric" style="width:140px; text-align:right;" type="text"/></div></div>
+  <div class="settings-row"><div class="label">ShopeePay</div><div class="price-edit"><input id="payShopee" inputmode="numeric" style="width:140px; text-align:right;" type="text"/></div></div>
+  <div class="settings-row"><div class="label">BSI</div><div class="price-edit"><input id="payBsi" inputmode="numeric" style="width:140px; text-align:right;" type="text"/></div></div>
+  <div class="settings-row"><div class="label">BRI</div><div class="price-edit"><input id="payBri" inputmode="numeric" style="width:140px; text-align:right;" type="text"/></div></div>
+  <div class="settings-row"><div class="label">Jago</div><div class="price-edit"><input id="payJago" inputmode="numeric" style="width:140px; text-align:right;" type="text"/></div></div>
+  <div class="settings-row"><div class="label">Seabank</div><div class="price-edit"><input id="paySeabank" inputmode="numeric" style="width:140px; text-align:right;" type="text"/></div></div>
 </div>
+
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"><span></span></div>
+  <div class="sheet-body">
+    <div id="formView">
+      <div class="sheet-title">
+        <span>Hitung Ongkos</span>
+        <button aria-label="Minimize" class="btn-minimize" id="btnMinimizeSheet">
+          <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewBox="0 0 24 24" width="22"><path d="M6 9l6 6 6-6"></path></svg>
+        </button>
+      </div>
+      <div class="service-schedule-card" id="serviceScheduleCard" style="display:none;">
+        <div class="schedule-summary">
+          <div class="schedule-icon">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.1" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+          </div>
+          <div class="schedule-main">
+            <div class="schedule-label">Jadwal Layanan</div>
+            <div class="schedule-today" id="scheduleTodayText">Memuat jadwal...</div>
+          </div>
+          <div class="schedule-badge" id="scheduleStatusBadge">...</div>
+        </div>
+        <div class="schedule-list" id="scheduleList"></div>
+        <button class="schedule-toggle" id="btnToggleSchedule" type="button">
+          <span>Lihat semua jadwal</span>
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
+        </button>
+      </div>
+      <div class="route-stack" id="routeStack">
+        <div class="route-rail"></div>
+      </div>
+      <button class="add-stop-btn" id="btnAddStop">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.4" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg>
+        Tambah tujuan baru
+      </button>
+      <div class="service-selector">
+        <div class="service-selector-title">Pilihan Layanan <span id="selectedServiceRate" style="float:right;color:var(--teal)">Rp 4.000/km</span></div>
+        <div class="service-options" id="serviceOptions">
+          <button aria-pressed="true" class="service-option active" data-service="Penumpang" type="button">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M5 16c0-3 2-6 7-6s7 3 7 6"></path><path d="M8 10a4 4 0 0 1 8 0"></path><path d="M7 16h10"></path></svg>
+            <span>Penumpang</span><small class="service-rate" id="rateLabelPenumpang">Rp 4.000/km</small>
+          </button>
+          <button aria-pressed="false" class="service-option" data-service="Barang" type="button">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M4 7h16v12H4z"></path><path d="M8 7V4h8v3"></path><path d="M4 12h16"></path></svg>
+            <span>Barang</span><small class="service-rate" id="rateLabelBarang">Rp 3.000/km</small>
+          </button>
+          <button aria-pressed="false" class="service-option" data-service="Belanja" type="button">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"></path><path d="M9 9V6a3 3 0 0 1 6 0v3"></path></svg>
+            <span>Belanja</span><small class="service-rate" id="rateLabelBelanja">Rp 3.000/km + Jasa</small>
+          </button>
+        </div>
+      </div>
+      <div class="settings-row" style="margin-top:14px; margin-bottom:16px; background:#FBF1E1;">
+        <div class="label" style="color:var(--accent-ink);">Pulang - Pergi (Round-Trip)</div>
+        <label class="toggle-switch">
+          <input id="toggleRoundTrip" type="checkbox"/>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <button class="cta" disabled="disabled" id="btnCalc">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24"><path d="M3 12h4l3-9 4 18 3-9h4"></path></svg>
+        Hitung Jarak &amp; Ongkos
+      </button>
+    </div>
+
+    <div class="result" id="resultView">
+      <div class="result-actions-top">
+        <button class="result-back" id="btnBack">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+          Ubah rute
+        </button>
+        <button aria-label="Minimize" class="btn-minimize" id="btnMinimizeResult">
+          <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewBox="0 0 24 24" width="22"><path d="M6 9l6 6 6-6"></path></svg>
+        </button>
+      </div>
+      <div class="meter-card">
+        <div class="meter-label">Estimasi ongkos</div>
+        <div class="meter-value mono"><span class="curr">Rp</span><span id="fareValue">0</span></div>
+        <div class="meter-sub">
+          <div>Jarak tempuh<b class="mono" id="distValue">0 km</b></div>
+          <div>Tarif/km<b class="mono" id="rateValue">Rp 0</b></div>
+          <div>Layanan<b id="serviceValue">Penumpang</b></div>
+        </div>
+        <div class="ruler">
+          <div class="ruler-track"><div class="ruler-fill" id="rulerFill"></div></div>
+          <div class="ruler-ticks"><span>0</span><span id="rulerMid">&#183;</span><span id="rulerMax">km</span></div>
+        </div>
+      </div>
+      <div class="segment-list" id="segmentList"></div>
+      <button class="nav-btn btn-full" id="btnNavMaps">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        Mulai Navigasi (Google Maps)
+      </button>
+      <div class="action-grid">
+        <button class="recalc-btn" id="btnPayment" style="background:#E3E7EE; color:var(--ink);">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24"><rect height="16" rx="2" ry="2" width="22" x="1" y="4"></rect><line x1="1" x2="23" y1="10" y2="10"></line></svg>
+          Info Bayar
+        </button>
+        <button class="recalc-btn" id="btnRecalc">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"></path></svg>
+          Hitung ulang
+        </button>
+        <button class="share-btn btn-full" onclick="handleShare(this, false, event)">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6A8.38 8.38 0 0 1 12.5 3h.5a8.48 8.48 0 0 1 8 8z"></path></svg>
+          Pesan Sekarang
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
-<div class='search-body'>
-<div class='quick-actions' id='quickActions'>
-<button class='quick-action' id='qaGps'>
-<div class='qa-icon'><svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'><circle cx='12' cy='12' r='3'></circle><path d='M12 2v3M12 19v3M2 12h3M19 12h3M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z'></path></svg></div>
-<div class='qa-text'><b>Gunakan lokasi saat ini</b><span>Deteksi otomatis via GPS</span></div>
-</button>
-<button class='quick-action' id='qaMap'>
-<div class='qa-icon' style='color:var(--dest);'><svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'><path d='M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z'></path><circle cx='12' cy='9' r='2.4'></circle></svg></div>
-<div class='qa-text'><b>Tandai di peta</b><span>Geser peta untuk memilih titik</span></div>
-</button>
+
+<div class="compact-bar" id="compactBar">
+  <div class="cb-info" id="cbInfo">
+    <div class="cb-price mono" id="cbPrice">Rp 0</div>
+    <div class="cb-dist" id="cbDist">0 km &#8226; 0 tujuan</div>
+  </div>
+  <div class="cb-actions">
+    <button aria-label="Bagikan" class="cb-btn" onclick="handleShare(this, true, event)">
+      <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24" width="18"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line></svg>
+    </button>
+    <button aria-label="Perbesar Layar" class="cb-btn" id="cbExpand">
+      <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewBox="0 0 24 24" width="20"><path d="M18 15l-6-6-6 6"></path></svg>
+    </button>
+  </div>
 </div>
-<div class='result-list' id='resultList'></div>
+
+<div class="modal-overlay" id="paymentModal">
+  <div class="modal-card">
+    <div class="modal-title">
+      Pilihan Pembayaran
+      <button id="btnClosePayment" style="color:var(--ink-soft);"><svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-width="2.5" viewBox="0 0 24 24" width="20"><path d="M18 6L6 18M6 6l12 12"></path></svg></button>
+    </div>
+    <div class="modal-body" id="paymentListContainer"></div>
+    <div style="margin-top:16px;">
+      <button class="recalc-btn" id="btnModalClose" style="font-weight:700;">Tutup</button>
+    </div>
+  </div>
 </div>
+
+<div class="schedule-modal-overlay" id="scheduleModal">
+  <div class="schedule-modal">
+    <div class="schedule-modal-head">
+      <span>Jadwal Layanan</span>
+      <button class="schedule-close" id="btnCloseSchedule">&#10005;</button>
+    </div>
+    <div id="scheduleModalContent"></div>
+  </div>
 </div>
-<div class='pick-bar' id='pickBar'>
-<div class='pick-address' id='pickAddress'>Menentukan alamat&#8230;</div>
-<div class='pick-sub'>Geser peta hingga pin tepat di lokasi</div>
-<button class='pick-confirm' id='pickConfirm'>
-<svg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.3' viewBox='0 0 24 24'><path d='M20 6L9 17l-5-5'></path></svg>
-                Pilih lokasi ini
-              </button>
-<button class='pick-cancel' id='pickCancel'>Batal</button>
+
+<div class="search-panel" id="searchPanel">
+  <div class="search-head">
+    <button class="icon-btn" id="btnCloseSearch" style="box-shadow:none;background:var(--surface);">
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.3" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+    </button>
+    <div class="search-input-wrap">
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+      <input autocomplete="off" id="searchInput" placeholder="Ketik alamat atau nama tempat" type="text"/>
+      <button class="clear-x" id="btnClearSearch"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.3" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"></path></svg></button>
+    </div>
+  </div>
+  <div class="search-body">
+    <div class="quick-actions" id="quickActions">
+      <button class="quick-action" id="qaGps">
+        <div class="qa-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"></path></svg></div>
+        <div class="qa-text"><b>Gunakan lokasi saat ini</b><span>Deteksi otomatis via GPS</span></div>
+      </button>
+      <button class="quick-action" id="qaMap">
+        <div class="qa-icon" style="color:var(--dest);"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z"></path><circle cx="12" cy="9" r="2.4"></circle></svg></div>
+        <div class="qa-text"><b>Tandai di peta</b><span>Geser peta untuk memilih titik</span></div>
+      </button>
+    </div>
+    <div class="result-list" id="resultList"></div>
+  </div>
 </div>
-<div class='toast' id='toast'></div>
-<script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>
+
+<div class="pick-bar" id="pickBar">
+  <div class="pick-address" id="pickAddress">Menentukan alamat&#8230;</div>
+  <div class="pick-sub">Geser peta hingga pin tepat di lokasi</div>
+  <button class="pick-confirm" id="pickConfirm">
+    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>
+    Pilih lokasi ini
+  </button>
+  <button class="pick-cancel" id="pickCancel">Batal</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-              //<![CDATA[
+//<![CDATA[
 (() => {
 'use strict';
+
+/* ================= PERSISTENCE & CONFIG SYNC ================= */
+const CONFIG_STORAGE_KEY = 'ojekOmYanuConfig';
+const PAYMENT_STORAGE_KEY = 'ongkir_payment_data';
+
+try {
+  const saved = JSON.parse(localStorage.getItem(CONFIG_STORAGE_KEY) || '{}');
+  if (saved.tarif) {
+    Object.assign(APP_CONFIG.tarif, saved.tarif);
+    if (saved.tarif.tarifLayanan) {
+      Object.assign(APP_CONFIG.tarif.tarifLayanan, saved.tarif.tarifLayanan);
+    }
+  }
+  if (saved.layananAktif) {
+    Object.assign(APP_CONFIG.layananAktif, saved.layananAktif);
+  }
+} catch (e) {
+  console.warn('Config storage unavailable');
+}
+
+const saveAppConfigToStorage = () => {
+  try {
+    localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify({
+      tarif: APP_CONFIG.tarif,
+      layananAktif: APP_CONFIG.layananAktif
+    }));
+  } catch (e) {}
+};
 
 /* ================= STATE ================= */
 const cryptoId = () => window.crypto?.randomUUID ? crypto.randomUUID() : 'p' + Math.random().toString(36).slice(2, 10);
@@ -956,23 +957,17 @@ const getEmptyPoints = () => [
 ];
 
 let points = getEmptyPoints();
-
-// Menarik dari config utama (APP_CONFIG)
-let minKm = APP_CONFIG.tarif.jarakMinimalKm;
-let minFare = APP_CONFIG.tarif.ongkosMinimalRp;
-let pricePerKm = APP_CONFIG.tarif.tarifLayanan.penumpang;
+let minKm = Number(APP_CONFIG.tarif.jarakMinimalKm) || 0;
+let minFare = Number(APP_CONFIG.tarif.ongkosMinimalRp) || 0;
 let routePointsForNav = [];
 let selectedService = 'Penumpang';
 
-// Data Payment State (Mencoba Load LocalStorage dlu, jika kosong pakai APP_CONFIG)
 let storedPayData = {};
 try {
-  storedPayData = JSON.parse(localStorage.getItem('ongkir_payment_data')) || {};
+  storedPayData = JSON.parse(localStorage.getItem(PAYMENT_STORAGE_KEY)) || {};
 } catch (error) {
   storedPayData = {};
 }
-
-// Gabungkan konfigurasi terbaru dengan data lama agar metode baru tetap tersedia.
 let payData = { ...APP_CONFIG.rekening, ...storedPayData };
 
 let activePointId = null;
@@ -983,17 +978,26 @@ let searchTimer = null;
 let drawnRouteLayers = [];
 const markers = {};
 
+const fmtRp = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const roundFare = (n) => Math.round(n / 10) * 10;
 const getPtLabel = (pt) => pt.customName || pt.address || pt.label;
 
+const getServiceConfig = (serviceName) => {
+  const key = String(serviceName || 'Penumpang').toLowerCase();
+  const rate = APP_CONFIG.tarif.tarifLayanan[key] ?? APP_CONFIG.tarif.tarifLayanan.penumpang;
+  const extraFee = key === 'belanja' ? (Number(APP_CONFIG.tarif.biayaJasaBelanja) || 0) : 0;
+  return { key, rate, extraFee };
+};
+
 /* ================= MAP INIT ================= */
-const map = L.map('map', { 
-  zoomControl: false, 
+const map = L.map('map', {
+  zoomControl: false,
   attributionControl: true,
-  preferCanvas: true 
+  preferCanvas: true
 }).setView(APP_CONFIG.titikPusatPeta, APP_CONFIG.zoomPeta);
 
 L.tileLayer('https://mt0.google.com/vt/lyrs=m&hl=id&x={x}&y={y}&z={z}', {
-  maxZoom: 19, attribution: '© Google Maps', crossOrigin: true 
+  maxZoom: 19, attribution: '© Google Maps', crossOrigin: true
 }).addTo(map);
 L.control.zoom({ position: 'bottomright' }).addTo(map);
 
@@ -1013,7 +1017,7 @@ window.toast = (msg) => {
   toastEl.textContent = msg;
   toastEl.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2400);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2600);
 };
 
 /* ================= SERVICE SCHEDULE ================= */
@@ -1091,23 +1095,32 @@ btnToggleSchedule.addEventListener('click', () => {
   btnToggleSchedule.querySelector('span').textContent = expanded ? 'Tutup jadwal' : 'Lihat semua jadwal';
 });
 
-
 const btnInfoSchedule = document.getElementById('btnInfoSchedule');
 const scheduleModal = document.getElementById('scheduleModal');
 const scheduleModalContent = document.getElementById('scheduleModalContent');
 const btnCloseSchedule = document.getElementById('btnCloseSchedule');
 
-btnInfoSchedule?.addEventListener('click',()=>{
+btnInfoSchedule?.addEventListener('click', () => {
   renderServiceSchedule();
   scheduleModalContent.innerHTML = scheduleList.innerHTML;
   scheduleModal.classList.add('show');
 });
-btnCloseSchedule?.addEventListener('click',()=>scheduleModal.classList.remove('show'));
-scheduleModal?.addEventListener('click',(e)=>{ if(e.target===scheduleModal) scheduleModal.classList.remove('show'); });
+btnCloseSchedule?.addEventListener('click', () => scheduleModal.classList.remove('show'));
+scheduleModal?.addEventListener('click', (e) => { if (e.target === scheduleModal) scheduleModal.classList.remove('show'); });
 
 /* ================= SERVICE CHOICE ================= */
 const serviceOptions = document.getElementById('serviceOptions');
 const allowedServices = ['Penumpang', 'Barang', 'Belanja'];
+
+const updateServiceRateLabels = () => {
+  const t = APP_CONFIG.tarif.tarifLayanan;
+  const fee = APP_CONFIG.tarif.biayaJasaBelanja || 0;
+  document.getElementById('rateLabelPenumpang').textContent = `Rp ${fmtRp(t.penumpang)}/km`;
+  document.getElementById('rateLabelBarang').textContent = `Rp ${fmtRp(t.barang)}/km`;
+  document.getElementById('rateLabelBelanja').textContent = fee > 0
+    ? `Rp ${fmtRp(t.belanja)}/km + Rp ${fmtRp(fee)}`
+    : `Rp ${fmtRp(t.belanja)}/km`;
+};
 
 const setSelectedService = (service, refreshResult = false) => {
   selectedService = allowedServices.includes(service) ? service : 'Penumpang';
@@ -1119,11 +1132,16 @@ const setSelectedService = (service, refreshResult = false) => {
 
   const serviceValue = document.getElementById('serviceValue');
   if (serviceValue) serviceValue.textContent = selectedService;
+
+  const { rate, extraFee } = getServiceConfig(selectedService);
   const selectedRate = document.getElementById('selectedServiceRate');
-  if(selectedRate){
-    const rate = selectedService==='Barang' ? APP_CONFIG.tarif.tarifLayanan.barang : APP_CONFIG.tarif.tarifLayanan.penumpang;
-    selectedRate.textContent = `Rp ${fmtRp(rate)}/km`;
+  if (selectedRate) {
+    selectedRate.textContent = extraFee > 0
+      ? `Rp ${fmtRp(rate)}/km (+Jasa Rp ${fmtRp(extraFee)})`
+      : `Rp ${fmtRp(rate)}/km`;
   }
+
+  updateServiceRateLabels();
 
   if (refreshResult && document.getElementById('resultView').classList.contains('show')) {
     executeCalc(true);
@@ -1132,11 +1150,10 @@ const setSelectedService = (service, refreshResult = false) => {
 
 serviceOptions.addEventListener('click', (event) => {
   const button = event.target.closest('.service-option');
-  if (!button) return;
-  if(button.dataset.disabled === 'true') return;
+  if (!button || button.dataset.disabled === 'true') return;
   const service = button.dataset.service;
-  if(APP_CONFIG.layananAktif && APP_CONFIG.layananAktif[service.toLowerCase()] === false){
-    toast('Layanan '+service+' sedang tidak aktif');
+  if (APP_CONFIG.layananAktif && APP_CONFIG.layananAktif[service.toLowerCase()] === false) {
+    toast('Layanan ' + service + ' sedang tidak aktif');
     return;
   }
   setSelectedService(service, true);
@@ -1148,16 +1165,16 @@ const syncServiceSettings = () => {
     barang: document.getElementById('toggleBarang')?.checked ?? true,
     belanja: document.getElementById('toggleBelanja')?.checked ?? true
   };
-  Object.keys(states).forEach(k=>APP_CONFIG.layananAktif[k]=states[k]);
-  document.querySelectorAll('.service-option').forEach(btn=>{
+  Object.keys(states).forEach(k => APP_CONFIG.layananAktif[k] = states[k]);
+  document.querySelectorAll('.service-option').forEach(btn => {
     const key = btn.dataset.service.toLowerCase();
     btn.style.display = APP_CONFIG.layananAktif[key] === false ? 'none' : 'flex';
   });
+  saveAppConfigToStorage();
 };
 document.getElementById('togglePenumpang')?.addEventListener('change', syncServiceSettings);
 document.getElementById('toggleBarang')?.addEventListener('change', syncServiceSettings);
 document.getElementById('toggleBelanja')?.addEventListener('change', syncServiceSettings);
-syncServiceSettings();
 
 /* ================= CLEAR ROUTE HELPER ================= */
 const clearRouteLayers = () => {
@@ -1171,9 +1188,15 @@ const inputMinKm = document.getElementById('minKm');
 const inputMinFare = document.getElementById('minFare');
 
 const initAppValues = () => {
-  inputPrice.value = pricePerKm;
+  inputPrice.value = APP_CONFIG.tarif.tarifLayanan.penumpang;
   inputMinKm.value = minKm;
   inputMinFare.value = minFare;
+
+  document.getElementById('togglePenumpang').checked = APP_CONFIG.layananAktif.penumpang !== false;
+  document.getElementById('toggleBarang').checked = APP_CONFIG.layananAktif.barang !== false;
+  document.getElementById('toggleBelanja').checked = APP_CONFIG.layananAktif.belanja !== false;
+  syncServiceSettings();
+  updateServiceRateLabels();
 
   document.getElementById('payName').value = payData.name || '';
   document.getElementById('payDana').value = payData.dana || '';
@@ -1196,13 +1219,14 @@ const updatePaymentData = () => {
   payData.bri = document.getElementById('payBri').value.trim();
   payData.jago = document.getElementById('payJago').value.trim();
   payData.seabank = document.getElementById('paySeabank').value.trim();
-  localStorage.setItem('ongkir_payment_data', JSON.stringify(payData));
+  try {
+    localStorage.setItem(PAYMENT_STORAGE_KEY, JSON.stringify(payData));
+  } catch (e) {}
 };
 
 ['payName','payDana','payOvo','payGopay','payShopee','payBsi','payBri','payJago','paySeabank'].forEach(id => {
   document.getElementById(id).addEventListener('input', updatePaymentData);
 });
-
 
 window.copyToClipboard = (text, btnElement) => {
   if (navigator.clipboard && window.isSecureContext) {
@@ -1232,23 +1256,25 @@ const renderPaymentModal = () => {
 
   let hasItem = false;
   banks.forEach(b => {
-     const val = payData[b.id];
-     if(val) {
-        hasItem = true;
-        html += `
-        <div class="pay-item">
-          <div class="pay-item-info">
-            <div class="pay-bank">${b.label}</div>
-            <div class="pay-acc">${val}</div>
-          </div>
-          <button class="btn-copy" onclick="copyToClipboard('${val}', this)" aria-label="Salin">
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          </button>
-        </div>`;
-     }
+    const val = payData[b.id];
+    if (val) {
+      hasItem = true;
+      html += `
+      <div class="pay-item">
+        <div class="pay-item-info">
+          <div class="pay-bank">${b.label}</div>
+          <div class="pay-acc">${val}</div>
+        </div>
+        <button class="btn-copy" onclick="copyToClipboard('${val}', this)" aria-label="Salin">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>`;
+    }
   });
 
-  if(!hasItem) { html += `<div style="font-size:13px; color:var(--ink-soft); text-align:center; padding:10px;">Belum ada info bayar yang diatur. Buka Pengaturan untuk menambah.</div>`; }
+  if (!hasItem) {
+    html += `<div style="font-size:13px; color:var(--ink-soft); text-align:center; padding:10px;">Belum ada info bayar yang diatur. Buka Pengaturan untuk menambah.</div>`;
+  }
   document.getElementById('paymentListContainer').innerHTML = html;
 };
 
@@ -1285,14 +1311,7 @@ document.addEventListener('fullscreenchange', () => {
   }
 });
 
-
-/* Motor routing preference:
-   - Menggunakan jaringan jalan nyata
-   - Menghindari motorway/tol
-   - Tidak menggunakan garis lurus fallback
-*/
-
-/* ================= OSRM & NOMINATIM ================= */
+/* ================= GEOCODING & MOTORCYCLE ROUTING (HARD NO-TOLL) ================= */
 const geocodeSearch = async (q) => {
   const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=0&limit=8&countrycodes=id&q=${encodeURIComponent(q)}`;
   try {
@@ -1313,58 +1332,144 @@ const reverseGeocode = async (lat, lng) => {
   }
 };
 
-const haversine = (a, b) => {
-  const R = 6371, toRad = Math.PI / 180;
-  const dLat = (b.lat - a.lat) * toRad, dLng = (b.lng - a.lng) * toRad;
-  const h = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * toRad) * Math.cos(b.lat * toRad) * Math.sin(dLng / 2) ** 2;
-  return 2 * R * Math.asin(Math.sqrt(h));
+// Decoder polyline presisi 6 milik Valhalla
+const decodeValhallaPolyline = (str, precision = 6) => {
+  let index = 0, lat = 0, lng = 0, coordinates = [], shift = 0, result = 0, byte = null;
+  const factor = Math.pow(10, precision);
+  while (index < str.length) {
+    byte = null; shift = 0; result = 0;
+    do {
+      byte = str.charCodeAt(index++) - 63;
+      result |= (byte & 0x1f) << shift;
+      shift += 5;
+    } while (byte >= 0x20);
+    lat += ((result & 1) ? ~(result >> 1) : (result >> 1));
+
+    byte = null; shift = 0; result = 0;
+    do {
+      byte = str.charCodeAt(index++) - 63;
+      result |= (byte & 0x1f) << shift;
+      shift += 5;
+    } while (byte >= 0x20);
+    lng += ((result & 1) ? ~(result >> 1) : (result >> 1));
+
+    coordinates.push([lat / factor, lng / factor]);
+  }
+  return coordinates;
+};
+
+// Validator keras untuk menolak segmen jalan tol pada OSRM
+const isOsrmRouteTollFree = (route) => {
+  if (!route || !Array.isArray(route.legs)) return false;
+  for (const leg of route.legs) {
+    for (const step of (leg.steps || [])) {
+      const roadName = String(step.name || '').toLowerCase();
+      const roadRef = String(step.ref || '').toLowerCase();
+      if (/\btol\b|\btoll\b|jalan tol/i.test(roadName) || /\btol\b/i.test(roadRef)) {
+        return false;
+      }
+      for (const inter of (step.intersections || [])) {
+        if (Array.isArray(inter.classes) && (inter.classes.includes('toll') || inter.classes.includes('motorway'))) {
+          return false;
+        }
+      }
+    }
+  }
+  return true;
+};
+
+// Engine 1: Valhalla Public API (Native motor_scooter costing, anti-tol & anti-highway)
+const routeViaValhalla = async (list) => {
+  const payload = {
+    locations: list.map(p => ({ lat: p.lat, lon: p.lng, type: "break" })),
+    costing: "motor_scooter",
+    costing_options: {
+      motor_scooter: {
+        use_tolls: 0,
+        use_highways: 0,
+        use_ferry: 0,
+        top_speed: 60
+      }
+    },
+    directions_options: {
+      units: "kilometers",
+      language: "id-ID"
+    }
+  };
+
+  const res = await fetch('https://valhalla1.openstreetmap.de/route', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!res.ok) throw new Error('valhalla-http-fail');
+  const data = await res.json();
+  const trip = data?.trip;
+  if (!trip || ! Array.isArray(trip.legs) || !trip.legs.length) {
+    throw new Error('valhalla-no-trip');
+  }
+
+  let allCoords = [];
+  const segments = [];
+
+  trip.legs.forEach((leg, idx) => {
+    if (leg.summary?.has_toll || leg.summary?.has_highway) {
+      throw new Error('valhalla-toll-detected');
+    }
+    segments.push(Number(leg.summary?.length) || 0);
+    const decoded = decodeValhallaPolyline(leg.shape, 6);
+    if (idx > 0 && decoded.length > 0) decoded.shift();
+    allCoords = allCoords.concat(decoded);
+  });
+
+  return {
+    distanceKm: Number(trip.summary?.length) || segments.reduce((a, b) => a + b, 0),
+    coords: allCoords,
+    segments,
+    engine: 'valhalla'
+  };
+};
+
+// Engine 2: OSRM dengan exclude=motorway + filter validasi langkah tol
+const routeViaOsrmNoToll = async (list) => {
+  const coordsStr = list.map(p => `${p.lng},${p.lat}`).join(';');
+  const urls = [
+    `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&steps=true&alternatives=true&exclude=motorway`,
+    `https://routing.openstreetmap.de/routed-bike/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&steps=true&alternatives=false`
+  ];
+
+  for (const url of urls) {
+    try {
+      const r = await fetch(url);
+      if (!r.ok) continue;
+      const data = await r.json();
+      if (!data.routes?.length) continue;
+
+      const validRoute = data.routes.find(isOsrmRouteTollFree);
+      if (validRoute) {
+        return {
+          distanceKm: validRoute.distance / 1000,
+          coords: validRoute.geometry.coordinates.map(c => [c[1], c[0]]),
+          segments: validRoute.legs.map(leg => leg.distance / 1000),
+          engine: 'osrm-notoll'
+        };
+      }
+    } catch (e) {}
+  }
+  throw new Error('route-not-found');
 };
 
 const routeBetween = async (list) => {
-  const coordsStr = list.map(p => `${p.lng},${p.lat}`).join(';');
-  const url = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&steps=true&continue_straight=false&alternatives=false&exclude=motorway,motorway_link,trunk`;
   try {
-    const r = await fetch(url);
-    if (!r.ok) throw new Error('osrm-fail');
-    const data = await r.json();
-    if (!data.routes?.length) throw new Error('no-route');
-    const route = data.routes[0];
-    return {
-      distanceKm: route.distance / 1000,
-      coords: route.geometry.coordinates.map(c => [c[1], c[0]]),
-      segments: route.legs.map(leg => leg.distance / 1000),
-      estimated: false
-    };
-  } catch (err) {
-    // Jangan menggambar garis lurus jika router gagal.
-    // Coba fallback ke OSRM server alternatif terlebih dahulu.
-    try {
-      const retryUrl = `https://routing.openstreetmap.de/routed-car/route/v1/driving/${coordsStr}?overview=full&geometries=geojson&steps=true&continue_straight=false`;
-      const retry = await fetch(retryUrl);
-      const retryData = await retry.json();
-
-      if (retryData.routes?.length) {
-        const route = retryData.routes[0];
-        return {
-          distanceKm: route.distance / 1000,
-          coords: route.geometry.coordinates.map(c => [c[1], c[0]]),
-          segments: route.legs.map(leg => leg.distance / 1000),
-          estimated: false
-        };
-      }
-    } catch(e) {}
-
-    throw new Error('route-not-found');
+    return await routeViaValhalla(list);
+  } catch (valhallaErr) {
+    return await routeViaOsrmNoToll(list);
   }
 };
 
 /* ================= RENDER STACK ================= */
 const routeStack = document.getElementById('routeStack');
-const swapButton = document.querySelector('.swap-btn');
-const updateSwapVisibility = () => {
- const sw=document.querySelector('.swap-btn');
- if(sw) sw.classList.toggle('hidden', points.length>2);
-};
 
 const iconFor = (role) => {
   if (role === 'origin') return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6"/></svg>`;
@@ -1398,17 +1503,17 @@ const renderStack = () => {
     swapBtn.setAttribute('aria-label', 'Tukar posisi');
     swapBtn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12M7 10l-4 4M7 10l4 4M17 14V2M17 2l-4 4M17 2l4 4"/></svg>`;
     swapBtn.onclick = () => {
-       const lastIdx = points.length - 1;
-       const temp = { lat: points[0].lat, lng: points[0].lng, address: points[0].address, customName: points[0].customName };
+      const lastIdx = points.length - 1;
+      const temp = { lat: points[0].lat, lng: points[0].lng, address: points[0].address, customName: points[0].customName };
 
-       points[0].lat = points[lastIdx].lat; points[0].lng = points[lastIdx].lng;
-       points[0].address = points[lastIdx].address; points[0].customName = points[lastIdx].customName;
+      points[0].lat = points[lastIdx].lat; points[0].lng = points[lastIdx].lng;
+      points[0].address = points[lastIdx].address; points[0].customName = points[lastIdx].customName;
 
-       points[lastIdx].lat = temp.lat; points[lastIdx].lng = temp.lng;
-       points[lastIdx].address = temp.address; points[lastIdx].customName = temp.customName;
+      points[lastIdx].lat = temp.lat; points[lastIdx].lng = temp.lng;
+      points[lastIdx].address = temp.address; points[lastIdx].customName = temp.customName;
 
-       renderStack();
-       if(document.getElementById('resultView').classList.contains('show')) executeCalc(true);
+      renderStack();
+      if (document.getElementById('resultView').classList.contains('show')) executeCalc(true);
     };
     routeStack.appendChild(swapBtn);
   }
@@ -1430,7 +1535,7 @@ routeStack.addEventListener('click', (e) => {
       if (newName !== null) {
         pt.customName = newName.trim();
         renderStack();
-        if(document.getElementById('resultView').classList.contains('show')) executeCalc(true); 
+        if (document.getElementById('resultView').classList.contains('show')) executeCalc(true);
       }
     }
     e.stopPropagation(); return;
@@ -1438,11 +1543,11 @@ routeStack.addEventListener('click', (e) => {
 
   if (clear) {
     const pt = points.find(p => p.id === clear.getAttribute('data-clear'));
-    if (pt) { 
+    if (pt) {
       pt.lat = null; pt.lng = null; pt.address = ''; pt.customName = '';
       clearRouteLayers();
       renderStack();
-      if(document.getElementById('resultView').classList.contains('show')) backToForm();
+      if (document.getElementById('resultView').classList.contains('show')) backToForm();
     }
     e.stopPropagation(); return;
   }
@@ -1457,7 +1562,7 @@ routeStack.addEventListener('click', (e) => {
 
     renderStack();
     if (points.every(p => p.lat != null && p.lng != null)) {
-      if(document.getElementById('resultView').classList.contains('show')) executeCalc(true);
+      if (document.getElementById('resultView').classList.contains('show')) executeCalc(true);
     } else {
       clearRouteLayers();
       backToForm();
@@ -1498,19 +1603,22 @@ document.getElementById('cbExpand').addEventListener('click', toggleSheet);
 const topMenu = document.getElementById('topMenu');
 const btnSettings = document.getElementById('btnSettings');
 
-// Secara default tombol settings disembunyikan.
-// Ubah APP_CONFIG.tampilkanTombolSettings menjadi true untuk menampilkannya.
 btnSettings.style.display = APP_CONFIG.tampilkanTombolSettings === true ? 'flex' : 'none';
-
 btnSettings.addEventListener('click', () => topMenu.classList.add('show'));
 document.getElementById('btnCloseSettings').addEventListener('click', () => topMenu.classList.remove('show'));
 
 const updatePricingInfo = () => {
-  pricePerKm = parseInt(inputPrice.value, 10) || 0;
+  const newPenumpangRate = parseInt(inputPrice.value, 10) || 0;
   minKm = parseFloat(inputMinKm.value) || 0;
   minFare = parseInt(inputMinFare.value, 10) || 0;
 
-  if(document.getElementById('resultView').classList.contains('show')) executeCalc(true);
+  APP_CONFIG.tarif.tarifLayanan.penumpang = newPenumpangRate;
+  APP_CONFIG.tarif.jarakMinimalKm = minKm;
+  APP_CONFIG.tarif.ongkosMinimalRp = minFare;
+  saveAppConfigToStorage();
+  setSelectedService(selectedService, false);
+
+  if (document.getElementById('resultView').classList.contains('show')) executeCalc(true);
 };
 inputPrice.addEventListener('input', updatePricingInfo);
 inputMinKm.addEventListener('input', updatePricingInfo);
@@ -1535,11 +1643,11 @@ document.getElementById('btnReset').addEventListener('click', () => {
   document.getElementById('resultView').classList.remove('show');
   document.getElementById('formView').style.display = 'block';
 
-  if (sheetEl.classList.contains('minimized')) toggleSheet(); 
+  if (sheetEl.classList.contains('minimized')) toggleSheet();
   renderStack();
 
   const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-  window.history.pushState({path:newUrl}, '', newUrl);
+  window.history.pushState({ path: newUrl }, '', newUrl);
   toast('Data rute telah direset');
 });
 
@@ -1566,17 +1674,17 @@ const syncMarkers = () => {
       markers[pt.id].setLatLng([pt.lat, pt.lng]);
       markers[pt.id].setIcon(badgeIcon(pt.role, label));
     } else {
-      const m = L.marker([pt.lat, pt.lng], { icon: badgeIcon(pt.role, label), draggable: pt.role !== 'return' }); 
+      const m = L.marker([pt.lat, pt.lng], { icon: badgeIcon(pt.role, label), draggable: pt.role !== 'return' });
       m.addTo(map);
 
-      if(pt.role !== 'return'){
+      if (pt.role !== 'return') {
         m.on('dragend', async () => {
           const { lat, lng } = m.getLatLng();
           pt.lat = lat; pt.lng = lng;
           pt.address = 'Mencari alamat…';
           renderStack();
 
-          if (document.getElementById('resultView').classList.contains('show')) executeCalc(true); 
+          if (document.getElementById('resultView').classList.contains('show')) executeCalc(true);
 
           pt.address = await reverseGeocode(lat, lng);
           renderStack();
@@ -1587,7 +1695,7 @@ const syncMarkers = () => {
   });
 
   const latlngs = displayPoints.filter(p => p.lat != null).map(p => [p.lat, p.lng]);
-  if(!document.getElementById('resultView').classList.contains('show')){
+  if (!document.getElementById('resultView').classList.contains('show')) {
     if (latlngs.length >= 2) map.fitBounds(latlngs, { padding: [70, 70] });
     else if (latlngs.length === 1) map.setView(latlngs[0], 15);
   }
@@ -1628,9 +1736,9 @@ searchInput.addEventListener('input', () => {
 
   searchTimer = setTimeout(async () => {
     const list = await geocodeSearch(q);
-    if (!list.length) { 
-      resultList.innerHTML = '<div class="search-empty">Alamat tidak ditemukan. Coba kata kunci lain atau tandai di peta.</div>'; 
-      return; 
+    if (!list.length) {
+      resultList.innerHTML = '<div class="search-empty">Alamat tidak ditemukan. Coba kata kunci lain atau tandai di peta.</div>';
+      return;
     }
     resultList.innerHTML = '';
     list.forEach(item => {
@@ -1648,7 +1756,7 @@ searchInput.addEventListener('input', () => {
       });
       resultList.appendChild(row);
     });
-  }, 1000); 
+  }, 600);
 });
 
 const setActivePoint = (lat, lng, address) => {
@@ -1656,7 +1764,7 @@ const setActivePoint = (lat, lng, address) => {
   if (!pt) return;
   pt.lat = lat; pt.lng = lng; pt.address = address;
   renderStack();
-  if(document.getElementById('resultView').classList.contains('show')) executeCalc(true);
+  if (document.getElementById('resultView').classList.contains('show')) executeCalc(true);
 };
 
 document.getElementById('qaGps').addEventListener('click', () => {
@@ -1703,7 +1811,7 @@ const exitPickMode = () => {
   pickMode = false;
   crosshair.classList.remove('show');
   pickBar.classList.remove('show');
-  if(!sheetEl.classList.contains('minimized')) sheetEl.style.transform = '';
+  if (!sheetEl.classList.contains('minimized')) sheetEl.style.transform = '';
   map.off('moveend', onMapMoveEnd);
 };
 
@@ -1713,16 +1821,16 @@ document.getElementById('pickConfirm').addEventListener('click', () => {
   exitPickMode();
 });
 document.getElementById('pickCancel').addEventListener('click', exitPickMode);
-let userLocationMarker = null;
 
+let userLocationMarker = null;
 const showUserPin = (lat, lng) => {
   const icon = L.divIcon({
     className: 'user-pinpoint',
     html: '<div style="width:18px;height:18px;border-radius:50%;background:#4285F4;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,.35)"></div>',
-    iconSize:[18,18]
+    iconSize: [18, 18]
   });
-  if(userLocationMarker) userLocationMarker.setLatLng([lat,lng]).setIcon(icon);
-  else userLocationMarker = L.marker([lat,lng],{icon,zIndexOffset:1000}).addTo(map);
+  if (userLocationMarker) userLocationMarker.setLatLng([lat, lng]).setIcon(icon);
+  else userLocationMarker = L.marker([lat, lng], { icon, zIndexOffset: 1000 }).addTo(map);
 };
 
 document.getElementById('btnLocate').addEventListener('click', () => {
@@ -1744,22 +1852,31 @@ const toggleRoundTrip = document.getElementById('toggleRoundTrip');
 
 const drawRoute = (coords) => {
   clearRouteLayers();
-  // Bayangan/garis tepi luar (Casing)
   const casing = L.polyline(coords, { color: '#1A45A3', weight: 9, opacity: 1, lineCap: 'round', lineJoin: 'round' }).addTo(map);
-  // Garis rute utama (Route)
   const route = L.polyline(coords, { color: '#4285F4', weight: 6, opacity: 1, lineCap: 'round', lineJoin: 'round' }).addTo(map);
-  
   drawnRouteLayers.push(casing, route);
   map.fitBounds(route.getBounds(), { padding: [60, 60] });
 };
 
-// LOGIKA PERHITUNGAN BARU
-const calculateFareLogic = (kmTotal) => {
-  const rate = selectedService === 'Barang'
-    ? APP_CONFIG.tarif.tarifLayanan.barang
-    : APP_CONFIG.tarif.tarifLayanan.penumpang;
-  pricePerKm = rate;
-  return kmTotal * rate;
+// LOGIKA PERHITUNGAN LENGKAP (PENUMPANG, BARANG, BELANJA + MINIMAL ONGKOS)
+const calculateFareDetails = (kmTotal) => {
+  const { rate, extraFee } = getServiceConfig(selectedService);
+  let distanceFare = kmTotal * rate;
+
+  if (minKm > 0 && kmTotal <= minKm && minFare > 0) {
+    distanceFare = minFare;
+  } else if (minFare > 0 && distanceFare < minFare) {
+    distanceFare = minFare;
+  }
+
+  const totalRaw = distanceFare + extraFee;
+  return {
+    rate,
+    extraFee,
+    distanceFare,
+    totalRaw,
+    totalRounded: roundFare(totalRaw)
+  };
 };
 
 window.executeCalc = async (silent = false) => {
@@ -1775,18 +1892,21 @@ window.executeCalc = async (silent = false) => {
     routePointsForNav = [...points];
 
     if (isRoundTrip && points.length >= 2) {
-       routePointsForNav.push({
-         ...points[0], 
-         id: points[0].id + '_return', 
-         role: 'return', 
-         label: 'Kembali ke Titik Awal',
-         customName: ''
-       });
+      routePointsForNav.push({
+        ...points[0],
+        id: points[0].id + '_return',
+        role: 'return',
+        label: 'Kembali ke Titik Awal',
+        customName: ''
+      });
     }
 
     const list = routePointsForNav.map(p => ({ lat: p.lat, lng: p.lng }));
     const res = await routeBetween(list);
     showResult(res, silent);
+  } catch (err) {
+    console.error(err);
+    toast('Gagal menemukan rute motor non-tol untuk titik ini.');
   } finally {
     if (!silent) {
       btnCalc.classList.remove('loading');
@@ -1796,28 +1916,26 @@ window.executeCalc = async (silent = false) => {
 };
 
 btnCalc.addEventListener('click', () => executeCalc(false));
-toggleRoundTrip.addEventListener('change', () => { if(document.getElementById('resultView').classList.contains('show')) executeCalc(true); });
-
-const roundFare = (n) => Math.round(n / 10) * 10;
-const fmtRp = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+toggleRoundTrip.addEventListener('change', () => {
+  if (document.getElementById('resultView').classList.contains('show')) executeCalc(true);
+});
 
 const showResult = (res, silent) => {
   const totalKm = res.distanceKm;
-  const rawFare = calculateFareLogic(totalKm);
-  const fare = roundFare(rawFare);
+  const { rate, extraFee, distanceFare, totalRounded } = calculateFareDetails(totalKm);
 
   const isRoundTrip = toggleRoundTrip.checked;
   const destCount = isRoundTrip ? routePointsForNav.length - 2 : routePointsForNav.length - 1;
 
   drawRoute(res.coords);
-  syncMarkers(); 
+  syncMarkers();
 
-  document.getElementById('fareValue').textContent = fmtRp(fare);
+  document.getElementById('fareValue').textContent = fmtRp(totalRounded);
   document.getElementById('distValue').textContent = `${totalKm.toFixed(1)} km`;
-  document.getElementById('rateValue').textContent = `Rp ${fmtRp(selectedService === 'Barang' ? APP_CONFIG.tarif.tarifLayanan.barang : APP_CONFIG.tarif.tarifLayanan.penumpang)}`;
+  document.getElementById('rateValue').textContent = `Rp ${fmtRp(rate)}`;
   document.getElementById('serviceValue').textContent = selectedService;
 
-  document.getElementById('cbPrice').textContent = `Rp ${fmtRp(fare)}`;
+  document.getElementById('cbPrice').textContent = `Rp ${fmtRp(totalRounded)}`;
   document.getElementById('cbDist').textContent = `${totalKm.toFixed(1)} km • ${destCount} tujuan ${isRoundTrip ? '(PP)' : ''} • ${selectedService}`;
 
   const fillPct = Math.min(100, totalKm <= 5 ? totalKm / 5 * 35 : totalKm <= 20 ? 35 + (totalKm - 5) / 15 * 40 : 75 + Math.min(25, (totalKm - 20) / 30 * 25));
@@ -1831,7 +1949,7 @@ const showResult = (res, silent) => {
   for (let i = 0; i < routePointsForNav.length - 1; i++) {
     const a = routePointsForNav[i], b = routePointsForNav[i + 1];
     const segKm = res.segments[i] || 0;
-    const segFare = roundFare( (segKm / totalKm) * rawFare );
+    const segFare = totalKm > 0 ? roundFare((segKm / totalKm) * distanceFare) : 0;
 
     const titleA = getPtLabel(a);
     const titleB = getPtLabel(b);
@@ -1841,11 +1959,24 @@ const showResult = (res, silent) => {
     row.innerHTML = `
       <div class="segment-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
       <div class="segment-text">
-        <div class="segment-route">${titleA} → ${titleB}</div>
+        <div class="segment-route">${escapeHtml(titleA)} → ${escapeHtml(titleB)}</div>
         <div class="segment-dist">${segKm.toFixed(1)} km</div>
       </div>
       <div class="segment-fare mono">Rp ${fmtRp(segFare)}</div>`;
     segList.appendChild(row);
+  }
+
+  if (extraFee > 0) {
+    const feeRow = document.createElement('div');
+    feeRow.className = 'segment';
+    feeRow.innerHTML = `
+      <div class="segment-icon" style="color:var(--teal);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 8h12l-1 12H7z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg></div>
+      <div class="segment-text">
+        <div class="segment-route">Biaya Jasa Belanja</div>
+        <div class="segment-dist">Tarif tetap layanan belanja</div>
+      </div>
+      <div class="segment-fare mono">Rp ${fmtRp(extraFee)}</div>`;
+    segList.appendChild(feeRow);
   }
 
   if (!silent) {
@@ -1857,7 +1988,7 @@ const showResult = (res, silent) => {
 const backToForm = () => {
   resultView.classList.remove('show');
   formView.style.display = 'block';
-  routePointsForNav = [...points]; 
+  routePointsForNav = [...points];
   syncMarkers();
 };
 document.getElementById('btnBack').addEventListener('click', backToForm);
@@ -1898,8 +2029,9 @@ const buildRouteShareUrl = () => {
     .map(p => `${p.lat.toFixed(5)},${p.lng.toFixed(5)},${encodeURIComponent(p.customName || '')}`)
     .join(';');
 
+  const { rate } = getServiceConfig(selectedService);
   shareUrl.searchParams.set('pts', ptsParam);
-  shareUrl.searchParams.set('p', pricePerKm);
+  shareUrl.searchParams.set('p', rate);
   shareUrl.searchParams.set('mk', minKm);
   shareUrl.searchParams.set('mf', minFare);
   shareUrl.searchParams.set('rt', toggleRoundTrip.checked ? '1' : '0');
@@ -1908,8 +2040,8 @@ const buildRouteShareUrl = () => {
   return shareUrl.toString();
 };
 
-window.handleShare = async (btnElement, isCompact = false) => {
-  if (isCompact && event) event.stopPropagation();
+window.handleShare = async (btnElement, isCompact = false, evt = null) => {
+  if (isCompact && evt) evt.stopPropagation();
 
   if (!points.every(p => p.lat != null && p.lng != null)) {
     toast('Lengkapi titik awal dan tujuan terlebih dahulu');
@@ -1923,29 +2055,29 @@ window.handleShare = async (btnElement, isCompact = false) => {
     const link = buildRouteShareUrl();
 
     let payTexts = [];
-    if(payData.dana) payTexts.push(`DANA : ${payData.dana}`);
-    if(payData.ovo) payTexts.push(`OVO : ${payData.ovo}`);
-    if(payData.gopay) payTexts.push(`GOPAY : ${payData.gopay}`);
-    if(payData.shopeepay) payTexts.push(`ShopeePay : ${payData.shopeepay}`);
-    if(payData.bsi) payTexts.push(`BSI : ${payData.bsi}`);
-    if(payData.bri) payTexts.push(`BRI : ${payData.bri}`);
-    if(payData.jago) payTexts.push(`Jago : ${payData.jago}`);
-    if(payData.seabank) payTexts.push(`Seabank : ${payData.seabank}`);
-    if(payData.name) payTexts.push(`a.n ${payData.name}`);
+    if (payData.dana) payTexts.push(`DANA : ${payData.dana}`);
+    if (payData.ovo) payTexts.push(`OVO : ${payData.ovo}`);
+    if (payData.gopay) payTexts.push(`GOPAY : ${payData.gopay}`);
+    if (payData.shopeepay) payTexts.push(`ShopeePay : ${payData.shopeepay}`);
+    if (payData.bsi) payTexts.push(`BSI : ${payData.bsi}`);
+    if (payData.bri) payTexts.push(`BRI : ${payData.bri}`);
+    if (payData.jago) payTexts.push(`Jago : ${payData.jago}`);
+    if (payData.seabank) payTexts.push(`Seabank : ${payData.seabank}`);
+    if (payData.name) payTexts.push(`a.n ${payData.name}`);
     const payStr = payTexts.length ? `\n\n💳 *Info Pembayaran:*\n${payTexts.join('\n')}` : '';
 
-    // Ambil hasil perhitungan yang sedang ditampilkan.
+    const { extraFee } = getServiceConfig(selectedService);
     const rincianPesanan = {
       layanan: selectedService,
       totalOngkos: `Rp ${document.getElementById('fareValue').textContent.trim()}`,
       jarak: document.getElementById('distValue').textContent.trim(),
-      pulangPergi: toggleRoundTrip.checked
+      pulangPergi: toggleRoundTrip.checked,
+      biayaJasa: extraFee,
+      biayaJasaFormatted: fmtRp(extraFee)
     };
 
-    // Satu template config digunakan untuk WhatsApp dan fitur share perangkat.
     const shareText = APP_CONFIG.teksBagikan(link, payStr, rincianPesanan);
 
-    // Tombol utama "Pesan Sekarang" mengirim template share ke WhatsApp admin.
     if (!isCompact) {
       const adminNumber = normalizeWhatsAppNumber(APP_CONFIG.whatsappAdmin);
       if (!adminNumber) {
@@ -1960,12 +2092,9 @@ window.handleShare = async (btnElement, isCompact = false) => {
       return;
     }
 
-    // Tombol share pada compact bar tetap membagikan teks dan tangkapan layar.
     document.querySelector('.topbar').style.display = 'none';
     const isSheetMinimized = sheetEl.classList.contains('minimized');
-    if (isSheetMinimized) {
-       sheetEl.style.display = 'none';
-    }
+    if (isSheetMinimized) sheetEl.style.display = 'none';
 
     await new Promise(res => setTimeout(res, 150));
     const w = document.documentElement.clientWidth;
@@ -1983,7 +2112,7 @@ window.handleShare = async (btnElement, isCompact = false) => {
     if (isSheetMinimized) sheetEl.style.display = 'flex';
 
     canvas.toBlob(async (blob) => {
-      if(!blob) throw new Error("Blob failed");
+      if (!blob) throw new Error("Blob failed");
       const file = new File([blob], 'ongkos-jarak.png', { type: 'image/png' });
 
       const shareData = {
@@ -2008,7 +2137,7 @@ window.handleShare = async (btnElement, isCompact = false) => {
   } catch (error) {
     console.error(error);
     document.querySelector('.topbar').style.display = 'flex';
-    if(sheetEl.classList.contains('minimized')) sheetEl.style.display = 'flex';
+    if (sheetEl.classList.contains('minimized')) sheetEl.style.display = 'flex';
     toast('Gagal memproses gambar/tautan.');
     btnElement.innerHTML = originalHtml;
   }
@@ -2016,19 +2145,20 @@ window.handleShare = async (btnElement, isCompact = false) => {
 
 /* ================= INIT & LOAD URL PARAMS ================= */
 const initApp = async () => {
-  initAppValues(); // Memuat data UI dari CONFIG awal
+  initAppValues();
   renderServiceSchedule();
   setInterval(renderServiceSchedule, 60000);
 
   const params = new URLSearchParams(window.location.search);
   if (params.get('layanan')) setSelectedService(params.get('layanan'));
+  else setSelectedService('Penumpang');
+
   const ptsStr = params.get('pts');
 
   if (ptsStr) {
-    if(params.get('p')) { pricePerKm = parseInt(params.get('p'),10); inputPrice.value = pricePerKm; }
-    if(params.get('mk')) { minKm = parseFloat(params.get('mk')); inputMinKm.value = minKm; }
-    if(params.get('mf')) { minFare = parseInt(params.get('mf'),10); inputMinFare.value = minFare; }
-    if(params.get('rt')) { toggleRoundTrip.checked = params.get('rt') === '1'; }
+    if (params.get('mk')) { minKm = parseFloat(params.get('mk')) || 0; inputMinKm.value = minKm; }
+    if (params.get('mf')) { minFare = parseInt(params.get('mf'), 10) || 0; inputMinFare.value = minFare; }
+    if (params.get('rt')) { toggleRoundTrip.checked = params.get('rt') === '1'; }
 
     const ptArr = ptsStr.split(';');
     if (ptArr.length >= 2) {
@@ -2044,251 +2174,26 @@ const initApp = async () => {
       });
 
       renderStack();
-      executeCalc(false); 
+      executeCalc(false);
 
       Promise.all(points.map(async p => {
         p.address = await reverseGeocode(p.lat, p.lng);
       })).then(() => {
-        renderStack(); 
+        renderStack();
         if (document.getElementById('resultView').classList.contains('show')) {
-          executeCalc(true); 
+          executeCalc(true);
         }
       });
     } else { renderStack(); }
   } else { renderStack(); }
 };
 
-
-// Production config persistence
-const CONFIG_STORAGE_KEY='ojekOmYanuConfig';
-try{
- const saved=localStorage.getItem(CONFIG_STORAGE_KEY);
- if(saved){
-   const savedConfig=JSON.parse(saved);
-   if(savedConfig.tarif) Object.assign(APP_CONFIG.tarif,savedConfig.tarif);
-   if(savedConfig.layananAktif) Object.assign(APP_CONFIG.layananAktif,savedConfig.layananAktif);
- }
-}catch(e){console.warn('Config storage unavailable');}
-
-// audit patch: restore user pinpoint after GPS detection
 initApp();
 })();
 //]]>
-            </script>
-</div>
-</div>
-</div>
-<!-- Floating Action Button: Kembali ke Homepage -->
-
-
-<script>
-/**
- * Ojek Om Yanu Architecture Layer
- * Single Source of Truth + Service Pattern
- */
-
-const APP_STATE = {
-  service: "Penumpang",
-  route: null,
-  userLocation: null,
-  fare: null,
-  isRouting: false
-};
-
-const SERVICE_CONFIG = {
-  Penumpang: {
-    active: true,
-    pricePerKm: 4000
-  },
-  Barang: {
-    active: true,
-    pricePerKm: 3000
-  },
-  Belanja: {
-    active: true,
-    pricePerKm: 3000,
-    serviceFee: 5000
-  }
-};
-
-const ROUTING_CONFIG_V2 = {
-  engine: "valhalla",
-  vehicle: "motor_scooter",
-  avoid: {
-    toll: true,
-    motorway: true,
-    motorway_link: true
-  }
-};
-
-const StorageService = {
-  key: "ojek_om_yanu_config_v2",
-
-  save(data){
-    localStorage.setItem(this.key, JSON.stringify(data));
-  },
-
-  load(){
-    try {
-      return JSON.parse(localStorage.getItem(this.key)) || {};
-    } catch(e){
-      return {};
-    }
-  }
-};
-
-const PricingService = {
-
-  calculate(service, distanceKm){
-
-    const config = SERVICE_CONFIG[service];
-
-    if(!config){
-      throw new Error("SERVICE_NOT_FOUND");
-    }
-
-    let total = distanceKm * config.pricePerKm;
-
-    if(config.serviceFee){
-      total += config.serviceFee;
-    }
-
-    return {
-      service,
-      distanceKm,
-      rate: config.pricePerKm,
-      serviceFee: config.serviceFee || 0,
-      total
-    };
-  }
-};
-
-const RouteValidator = {
-
-  validate(route){
-
-    if(!route || !route.geometry){
-      return false;
-    }
-
-    // reject fallback straight line
-    if(route.geometry.coordinates.length < 2){
-      return false;
-    }
-
-    return true;
-  }
-};
-
-const RoutingService = {
-
-  async calculate(points){
-
-    if(!points || points.length < 2){
-      throw new Error("INVALID_POINT");
-    }
-
-    APP_STATE.isRouting = true;
-
-    try{
-
-      // Valhalla motor routing endpoint preparation
-      // Final production deployment should proxy this through backend.
-      const payload = {
-        locations: points.map(p=>({
-          lat:p.lat,
-          lon:p.lng
-        })),
-        costing:"motor_scooter",
-        costing_options:{
-          motor_scooter:{
-            use_tolls:0,
-            use_highways:0
-          }
-        }
-      };
-
-      return {
-        engine:"valhalla",
-        payload,
-        validated:false
-      };
-
-    }finally{
-      APP_STATE.isRouting=false;
-    }
-  }
-};
-
-window.OjekArchitecture = {
-  STATE:APP_STATE,
-  SERVICES:SERVICE_CONFIG,
-  RoutingService,
-  PricingService,
-  StorageService,
-  RouteValidator
-};
-
 </script>
-
-
-<script>
-/**
- * Hard Motorcycle Routing Guard
- * Prevent toll/highway routes from being accepted.
- */
-
-const MOTOR_ROUTE_POLICY = {
-  vehicle: "motor_scooter",
-  forbiddenRoadTypes: [
-    "motorway",
-    "motorway_link",
-    "toll",
-    "expressway"
-  ],
-  retryLimit: 2
-};
-
-function validateMotorOnlyRoute(route){
-  if(!route) return false;
-
-  const text = JSON.stringify(route).toLowerCase();
-
-  return !MOTOR_ROUTE_POLICY.forbiddenRoadTypes.some(type =>
-    text.includes(type)
-  );
-}
-
-async function requestMotorRoute(points){
-
-  const payload = {
-    locations: points.map(p=>({
-      lat:p.lat,
-      lon:p.lng
-    })),
-    costing:"motor_scooter",
-    costing_options:{
-      motor_scooter:{
-        use_tolls:0,
-        use_highways:0,
-        use_ferry:0,
-        top_speed:45
-      }
-    },
-    directions_options:{
-      units:"kilometers",
-      language:"id-ID"
-    }
-  };
-
-  return payload;
-}
-
-window.MotorRoutingGuard = {
-  validate: validateMotorOnlyRoute,
-  request: requestMotorRoute
-};
-</script>
-
+</div>
+</div>
+</div>
 </body>
 </html>

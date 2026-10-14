@@ -640,7 +640,7 @@ const APP_CONFIG = {
     const statusPerjalanan = rincian.pulangPergi ? "Pulang - Pergi" : "Sekali Jalan";
     const infoJasa = rincian.biayaJasa > 0 ? `\n🛍 *Biaya Jasa Belanja:* Rp ${rincian.biayaJasaFormatted}` : '';
 
-    return `Halo kak, berikut rincian jarak dan estimasi ongkos pengiriman atau ojek kami.\n\n🛵 *Pilihan Layanan:* ${rincian.layanan}\n💰 *Total Ongkos:* ${rincian.totalOngkos}${infoJasa}\n🛣 *Jarak Tempuh:* ${rincian.jarak}\n🔄 *Perjalanan:* ${statusPerjalanan}\n\n📍 Cek rute atau ubah rincian langsung di web:\n${urlLink}${infoBayar}`;
+    return `Rincian jarak dan estimasi ongkos.\n\n🛵 *Layanan:* ${rincian.layanan}\n💰 *Ongkos:* ${rincian.totalOngkos}${infoJasa}\n🛣 *Jarak:* ${rincian.jarak}\n🔄 *Perjalanan:* ${statusPerjalanan}\n\n📍 Cek rute atau ubah rincian langsung di web:\n${urlLink}${infoBayar}`;
   }
 };
 
